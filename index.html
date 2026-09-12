@@ -3,297 +3,296 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>AutoLog Pro</title>
+  <title>AutoLog</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <style>
     body {
-      background-color: var(--tg-theme-bg-color, #0b1329);
-      color: var(--tg-theme-text-color, #f8fafc);
+      background-color: #090d16;
+      color: #ffffff;
       -webkit-tap-highlight-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     .custom-scroll::-webkit-scrollbar { display: none; }
   </style>
 </head>
-<body class="min-h-screen pb-24 antialiased selection:bg-blue-600 selection:text-white custom-scroll">
+<body class="min-h-screen pb-24 antialiased select-none custom-scroll">
 
-  <!-- ШАПКА: ГАРАЖ И ОДОМЕТР -->
-  <header class="sticky top-0 z-30 backdrop-blur-md bg-slate-900/90 border-b border-slate-800 px-4 py-3">
-    <div class="flex items-center justify-between">
-      <button id="garageBtn" class="flex items-center gap-2 bg-slate-800/90 hover:bg-slate-700/80 px-3 py-1.5 rounded-xl border border-slate-700 transition">
-        <i class="ph ph-car text-blue-400 text-lg"></i>
-        <div class="text-left">
-          <div class="text-xs font-semibold leading-tight flex items-center gap-1">
-            <span id="hdrCarName">Загрузка...</span>
-            <i class="ph ph-caret-down text-slate-400 text-xs"></i>
+  <!-- ШАПКА: ЧЁТКАЯ, КОНТРАСТНАЯ, КРУПНАЯ -->
+  <header class="sticky top-0 z-30 bg-[#0f172a] border-b border-slate-700/80 px-4 py-3 shadow-lg">
+    <div class="flex items-center justify-between gap-2">
+      <button id="garageBtn" class="flex items-center gap-2.5 bg-slate-800 hover:bg-slate-700 px-3.5 py-2 rounded-xl border border-slate-600 transition text-left flex-1 min-w-0">
+        <i class="ph-bold ph-car text-blue-400 text-xl flex-shrink-0"></i>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center gap-1.5">
+            <span id="hdrCarName" class="text-sm font-black text-white truncate tracking-wide">Мой Автомобиль</span>
+            <i class="ph-bold ph-caret-down text-slate-300 text-xs"></i>
           </div>
-          <div id="hdrCarSub" class="text-[10px] text-slate-400 font-mono">...</div>
+          <div id="hdrCarSub" class="text-xs text-slate-300 font-semibold truncate">Нажмите для выбора</div>
         </div>
       </button>
 
-      <div class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700">
-        <i class="ph ph-gauge text-slate-400 text-sm"></i>
-        <span id="hdrKmDisplay" class="font-mono text-xs font-bold text-slate-200">0 км</span>
-        <button id="updateKmBtn" class="text-blue-400 hover:text-blue-300 p-0.5 ml-1">
-          <i class="ph ph-pencil-simple text-xs"></i>
+      <div class="flex items-center gap-1.5 bg-slate-800 px-3 py-2 rounded-xl border border-slate-600 flex-shrink-0">
+        <i class="ph-bold ph-gauge text-amber-400 text-base"></i>
+        <span id="hdrKmDisplay" class="font-mono text-xs font-black text-white tracking-wider">0 км</span>
+        <button id="updateKmBtn" class="text-blue-400 hover:text-white p-1 ml-0.5">
+          <i class="ph-bold ph-pencil-simple text-sm"></i>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- ОСНОВНОЙ КОНТЕНТ ПО ВКЛАДКАМ -->
-  <main class="px-4 py-4 max-w-lg mx-auto">
+  <!-- ОСНОВНОЙ ЭКРАН -->
+  <main class="px-4 py-4 max-w-lg mx-auto space-y-4">
 
-    <!-- ВКЛАДКА 1: РЕГУЛЯРНОЕ ТО -->
-    <div id="tabContent-to" class="tab-page space-y-4">
+    <!-- ВКЛАДКА 1: ТО И РЕГЛАМЕНТ -->
+    <div id="tabContent-to" class="tab-page space-y-3.5">
       <div class="flex items-center justify-between px-1">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-          <i class="ph ph-drop text-amber-400"></i> Регламент ТО
+        <h2 class="text-xs font-black uppercase tracking-wider text-slate-200 flex items-center gap-1.5">
+          <i class="ph-bold ph-drop text-amber-400"></i> Регламент ТО
         </h2>
-        <button id="openSettingsBtn" class="text-[11px] text-blue-400 hover:underline flex items-center gap-1">
-          <i class="ph ph-gear"></i> Интервалы
+        <button id="openSettingsBtn" class="text-xs font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-500/10 border border-blue-500/30 px-2.5 py-1 rounded-lg">
+          <i class="ph-bold ph-gear"></i> Настроить км
         </button>
       </div>
 
-      <!-- Масло -->
-      <div id="card-oil" class="bg-slate-900 border border-slate-800 rounded-2xl p-3.5 space-y-2"></div>
+      <!-- Главная карточка: Масло -->
+      <div id="card-oil" class="bg-slate-850 bg-slate-900/90 border border-slate-700 rounded-2xl p-4 space-y-2.5 shadow-md"></div>
 
-      <!-- Сетка фильтров -->
-      <div class="grid grid-cols-2 gap-2">
-        <div id="card-fuel_filter" class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-1.5"></div>
-        <div id="card-air_filter" class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-1.5"></div>
-        <div id="card-cabin_filter" class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-1.5"></div>
-        <div id="card-spark_plugs" class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-1.5"></div>
+      <!-- Плитки фильтров -->
+      <div class="grid grid-cols-2 gap-2.5">
+        <div id="card-fuel_filter" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-2"></div>
+        <div id="card-air_filter" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-2"></div>
+        <div id="card-cabin_filter" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-2"></div>
+        <div id="card-spark_plugs" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-2"></div>
       </div>
     </div>
 
-    <!-- ВКЛАДКА 2: УЗЛЫ И ТОРМОЗА -->
-    <div id="tabContent-brakes" class="tab-page space-y-4 hidden">
-      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5 px-1">
-        <i class="ph ph-disc text-rose-400"></i> Тормозная система и ГРМ
+    <!-- ВКЛАДКА 2: ТОРМОЗА И ГРМ -->
+    <div id="tabContent-brakes" class="tab-page space-y-3.5 hidden">
+      <h2 class="text-xs font-black uppercase tracking-wider text-slate-200 flex items-center gap-1.5 px-1">
+        <i class="ph-bold ph-disc text-rose-400"></i> Тормоза и ГРМ
       </h2>
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3.5 space-y-3">
-        <div id="card-timing_belt" class="space-y-1"></div>
-        <div id="card-brake_pads" class="space-y-1 pt-2 border-t border-slate-800/80"></div>
-        <div id="card-brake_discs" class="space-y-1 pt-2 border-t border-slate-800/80"></div>
+      <div class="bg-slate-900 border border-slate-700 rounded-2xl p-4 space-y-4 shadow-md">
+        <div id="card-timing_belt" class="space-y-1.5"></div>
+        <div id="card-brake_pads" class="space-y-1.5 pt-3 border-t border-slate-800"></div>
+        <div id="card-brake_discs" class="space-y-1.5 pt-3 border-t border-slate-800"></div>
       </div>
     </div>
 
     <!-- ВКЛАДКА 3: ХОДОВАЯ И РЕМОНТЫ -->
-    <div id="tabContent-suspension" class="tab-page space-y-4 hidden">
-      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5 px-1">
-        <i class="ph ph-wrench text-blue-400"></i> Ходовая и прочие узлы
+    <div id="tabContent-suspension" class="tab-page space-y-3.5 hidden">
+      <h2 class="text-xs font-black uppercase tracking-wider text-slate-200 flex items-center gap-1.5 px-1">
+        <i class="ph-bold ph-wrench text-blue-400"></i> Подвеска и ремонт
       </h2>
-      <div id="suspensionList" class="space-y-2"></div>
+      <div id="suspensionList" class="space-y-2.5"></div>
     </div>
 
-    <!-- ВКЛАДКА 4: РАСХОДЫ И ИСТОРИЯ + AI ПОДБОР -->
+    <!-- ВКЛАДКА 4: ИСТОРИЯ И AI ПОИСК -->
     <div id="tabContent-history" class="tab-page space-y-4 hidden">
       <!-- AI Подбор деталей -->
-      <section class="bg-gradient-to-r from-blue-900/30 to-indigo-900/30 border border-blue-800/40 rounded-2xl p-3.5 space-y-2.5">
+      <section class="bg-slate-900 border border-blue-500/40 rounded-2xl p-4 space-y-3 shadow-md">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-blue-300 flex items-center gap-1.5">
-            <i class="ph ph-sparkle text-blue-400"></i> AI-подбор артикулов
+          <span class="text-xs font-black text-blue-300 flex items-center gap-1.5">
+            <i class="ph-bold ph-sparkle text-blue-400 text-sm"></i> AI-подбор артикулов
           </span>
-          <span class="text-[10px] text-slate-400 font-mono" id="aiVinHint">VIN: Не указан</span>
+          <span class="text-[11px] text-slate-300 font-mono font-bold" id="aiVinHint">VIN: Не указан</span>
         </div>
         <div class="flex gap-2">
-          <input id="aiPartQuery" type="text" placeholder="Напр.: передние колодки или комплект ГРМ" class="flex-1 bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none focus:border-blue-500">
-          <button id="aiFindPartBtn" class="bg-blue-600 hover:bg-blue-500 active:scale-95 px-3 py-2 rounded-xl text-xs font-semibold text-white transition flex items-center gap-1">
-            <span>Поиск</span>
+          <input id="aiPartQuery" type="text" placeholder="Напр.: комплект сцепления" class="flex-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-400 outline-none focus:border-blue-400 font-medium">
+          <button id="aiFindPartBtn" class="bg-blue-600 hover:bg-blue-500 active:scale-95 px-4 py-2 rounded-xl text-xs font-black text-white transition flex items-center gap-1 shadow-md">
+            <span>Найти</span>
           </button>
         </div>
-        <div id="aiPartResult" class="text-xs text-slate-300 bg-slate-900/80 p-3 rounded-xl border border-slate-800 hidden whitespace-pre-line leading-relaxed"></div>
+        <div id="aiPartResult" class="text-xs text-white bg-slate-800/90 p-3 rounded-xl border border-slate-700 hidden whitespace-pre-line leading-relaxed font-mono"></div>
       </section>
 
-      <!-- Хронологическая лента -->
       <div>
-        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 px-1">История всех расходов</h3>
+        <h3 class="text-xs font-black uppercase tracking-wider text-slate-200 mb-2 px-1">История записей</h3>
         <div id="fullHistoryList" class="space-y-2"></div>
       </div>
     </div>
 
   </main>
 
-  <!-- ПЛАВАЮЩАЯ КНОПКА (+) СПРАВА ВНИЗУ -->
-  <button id="openAddModalBtn" class="fixed bottom-20 right-5 w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-500 active:scale-90 text-white flex items-center justify-center shadow-xl shadow-blue-600/40 z-40 transition">
-    <i class="ph ph-plus text-2xl font-bold"></i>
+  <!-- ПЛАВАЮЩАЯ КНОПКА (+) -->
+  <button id="openAddModalBtn" class="fixed bottom-20 right-5 w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-500 active:scale-90 text-white flex items-center justify-center shadow-2xl shadow-blue-600/60 z-40 border-2 border-blue-400/40 transition">
+    <i class="ph-bold ph-plus text-2xl font-black"></i>
   </button>
 
-  <!-- НАСТОЯЩИЙ НИЖНИЙ НАВБАР (BOTTOM APP NAVIGATION) -->
-  <nav class="fixed bottom-0 left-0 right-0 z-30 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 flex justify-around py-2 px-1 max-w-lg mx-auto">
-    <button onclick="switchTab('to')" id="navBtn-to" class="nav-btn flex flex-col items-center gap-1 text-blue-400">
-      <i class="ph ph-drop text-lg"></i>
-      <span class="text-[10px] font-medium">ТО</span>
+  <!-- НИЖНИЙ НАВБАР -->
+  <nav class="fixed bottom-0 left-0 right-0 z-30 bg-[#0f172a] border-t border-slate-700 flex justify-around py-2.5 px-2 max-w-lg mx-auto shadow-2xl">
+    <button onclick="switchTab('to')" id="navBtn-to" class="nav-btn flex flex-col items-center gap-1 text-blue-400 font-bold">
+      <i class="ph-bold ph-drop text-xl"></i>
+      <span class="text-[11px]">ТО</span>
     </button>
-    <button onclick="switchTab('brakes')" id="navBtn-brakes" class="nav-btn flex flex-col items-center gap-1 text-slate-400">
-      <i class="ph ph-disc text-lg"></i>
-      <span class="text-[10px] font-medium">Тормоза</span>
+    <button onclick="switchTab('brakes')" id="navBtn-brakes" class="nav-btn flex flex-col items-center gap-1 text-slate-400 font-bold">
+      <i class="ph-bold ph-disc text-xl"></i>
+      <span class="text-[11px]">Тормоза</span>
     </button>
-    <button onclick="switchTab('suspension')" id="navBtn-suspension" class="nav-btn flex flex-col items-center gap-1 text-slate-400">
-      <i class="ph ph-wrench text-lg"></i>
-      <span class="text-[10px] font-medium">Ходовая</span>
+    <button onclick="switchTab('suspension')" id="navBtn-suspension" class="nav-btn flex flex-col items-center gap-1 text-slate-400 font-bold">
+      <i class="ph-bold ph-wrench text-xl"></i>
+      <span class="text-[11px]">Ходовая</span>
     </button>
-    <button onclick="switchTab('history')" id="navBtn-history" class="nav-btn flex flex-col items-center gap-1 text-slate-400">
-      <i class="ph ph-receipt text-lg"></i>
-      <span class="text-[10px] font-medium">История</span>
+    <button onclick="switchTab('history')" id="navBtn-history" class="nav-btn flex flex-col items-center gap-1 text-slate-400 font-bold">
+      <i class="ph-bold ph-receipt text-xl"></i>
+      <span class="text-[11px]">История</span>
     </button>
   </nav>
 
-  <!-- МОДАЛКА: ДОБАВИТЬ ЗАПИСЬ / ТО -->
-  <div id="addModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
-    <div class="bg-slate-900 border-t border-slate-800 rounded-t-3xl w-full max-w-lg p-5 space-y-4 max-h-[90vh] overflow-y-auto">
+  <!-- МОДАЛКА 1: ДОБАВИТЬ ЗАПИСЬ -->
+  <div id="addModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-end justify-center">
+    <div class="bg-slate-900 border-t-2 border-slate-700 rounded-t-3xl w-full max-w-lg p-5 space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center pb-2 border-b border-slate-800">
-        <h3 class="text-sm font-bold text-slate-200">Добавить запись</h3>
-        <button class="closeModalBtn text-slate-400 hover:text-white p-1"><i class="ph ph-x text-lg"></i></button>
+        <h3 class="text-sm font-black text-white">Добавить работу / запчасть</h3>
+        <button class="closeModalBtn text-slate-400 hover:text-white p-1"><i class="ph-bold ph-x text-xl"></i></button>
       </div>
 
-      <!-- Фото детали / чека с AI распознаванием -->
-      <label class="w-full py-3 px-4 border border-dashed border-blue-500/40 bg-blue-500/10 hover:bg-blue-500/20 rounded-2xl flex items-center justify-center gap-2 text-blue-400 transition cursor-pointer">
-        <i class="ph ph-camera text-xl"></i>
-        <span id="photoStatusText" class="text-xs font-medium">Сфотографировать чек или коробку (AI)</span>
-        <input id="aiPhotoInput" type="file" accept="image/*" class="hidden">
+      <!-- Кнопка фото AI -->
+      <label class="w-full py-3 px-4 border-2 border-dashed border-blue-500/50 bg-blue-500/15 hover:bg-blue-500/25 rounded-2xl flex items-center justify-center gap-2 text-blue-300 font-bold transition cursor-pointer shadow-sm">
+        <i class="ph-bold ph-camera text-2xl text-blue-400"></i>
+        <span id="photoStatusText" class="text-xs">Сфотографировать коробку / номер / чек</span>
+        <input id="aiPhotoInput" type="file" accept="image/*" capture="environment" class="hidden">
       </label>
 
       <div class="space-y-3">
         <div>
-          <label class="text-[11px] text-slate-400 font-medium">Что делалось / Название детали</label>
-          <input id="entryTitle" type="text" placeholder="Напр.: Замена масла или Сайлентблоки" class="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-slate-200 outline-none">
+          <label class="text-xs text-slate-300 font-bold">Что делалось / Название запчасти</label>
+          <input id="entryTitle" type="text" placeholder="Напр.: Масляный фильтр Mann HU711" class="w-full mt-1.5 px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-xl text-xs text-white placeholder-slate-400 font-semibold outline-none focus:border-blue-400">
         </div>
 
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="text-[11px] text-slate-400 font-medium">Пробег (км)</label>
-            <input id="entryKm" type="number" class="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs font-mono text-slate-200 outline-none">
+            <label class="text-xs text-slate-300 font-bold">Пробег (км)</label>
+            <input id="entryKm" type="number" class="w-full mt-1.5 px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-xl text-xs font-mono text-white font-bold outline-none focus:border-blue-400">
           </div>
           <div>
-            <label class="text-[11px] text-slate-400 font-medium">Стоимость</label>
-            <input id="entryCost" type="text" placeholder="150 PLN или 1200 грн" class="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs font-mono text-slate-200 outline-none">
+            <label class="text-xs text-slate-300 font-bold">Цена</label>
+            <input id="entryCost" type="text" placeholder="85 PLN или 850 грн" class="w-full mt-1.5 px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-xl text-xs font-mono text-white font-bold outline-none focus:border-blue-400">
           </div>
         </div>
 
         <div>
-          <label class="text-[11px] text-slate-400 font-medium mb-1 block">Категория / Быстрый сброс регламента:</label>
-          <div class="grid grid-cols-3 gap-1.5 text-xs">
-            <label class="flex items-center gap-1.5 bg-slate-800 p-2 rounded-lg border border-slate-700 text-slate-300 cursor-pointer">
-              <input type="checkbox" id="chk-oil" class="rounded text-blue-600"> Масло
+          <label class="text-xs text-slate-300 font-bold mb-1.5 block">Сбросить счетчик регламента (если менялось):</label>
+          <div class="grid grid-cols-3 gap-1.5 text-xs font-bold">
+            <label class="flex items-center gap-2 bg-slate-800 p-2.5 rounded-xl border border-slate-700 text-white cursor-pointer">
+              <input type="checkbox" id="chk-oil" class="w-4 h-4 rounded text-blue-600"> Масло
             </label>
-            <label class="flex items-center gap-1.5 bg-slate-800 p-2 rounded-lg border border-slate-700 text-slate-300 cursor-pointer">
-              <input type="checkbox" id="chk-fuel_filter" class="rounded text-blue-600"> Топливный
+            <label class="flex items-center gap-2 bg-slate-800 p-2.5 rounded-xl border border-slate-700 text-white cursor-pointer">
+              <input type="checkbox" id="chk-fuel_filter" class="w-4 h-4 rounded text-blue-600"> Топливный
             </label>
-            <label class="flex items-center gap-1.5 bg-slate-800 p-2 rounded-lg border border-slate-700 text-slate-300 cursor-pointer">
-              <input type="checkbox" id="chk-air_filter" class="rounded text-blue-600"> Воздушный
+            <label class="flex items-center gap-2 bg-slate-800 p-2.5 rounded-xl border border-slate-700 text-white cursor-pointer">
+              <input type="checkbox" id="chk-air_filter" class="w-4 h-4 rounded text-blue-600"> Воздушный
             </label>
-            <label class="flex items-center gap-1.5 bg-slate-800 p-2 rounded-lg border border-slate-700 text-slate-300 cursor-pointer">
-              <input type="checkbox" id="chk-cabin_filter" class="rounded text-blue-600"> Салонный
+            <label class="flex items-center gap-2 bg-slate-800 p-2.5 rounded-xl border border-slate-700 text-white cursor-pointer">
+              <input type="checkbox" id="chk-cabin_filter" class="w-4 h-4 rounded text-blue-600"> Салонный
             </label>
-            <label class="flex items-center gap-1.5 bg-slate-800 p-2 rounded-lg border border-slate-700 text-slate-300 cursor-pointer">
-              <input type="checkbox" id="chk-brake_pads" class="rounded text-blue-600"> Колодки
+            <label class="flex items-center gap-2 bg-slate-800 p-2.5 rounded-xl border border-slate-700 text-white cursor-pointer">
+              <input type="checkbox" id="chk-brake_pads" class="w-4 h-4 rounded text-blue-600"> Колодки
             </label>
-            <label class="flex items-center gap-1.5 bg-slate-800 p-2 rounded-lg border border-slate-700 text-slate-300 cursor-pointer">
-              <input type="checkbox" id="chk-timing_belt" class="rounded text-blue-600"> ГРМ
+            <label class="flex items-center gap-2 bg-slate-800 p-2.5 rounded-xl border border-slate-700 text-white cursor-pointer">
+              <input type="checkbox" id="chk-timing_belt" class="w-4 h-4 rounded text-blue-600"> ГРМ
             </label>
           </div>
         </div>
 
-        <button id="saveEntryBtn" class="w-full py-3 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white rounded-xl text-xs font-bold transition">
-          Сохранить запись
+        <button id="saveEntryBtn" class="w-full py-3.5 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white rounded-xl text-xs font-black uppercase tracking-wider transition shadow-lg shadow-blue-600/30 mt-2">
+          Сохранить в историю
         </button>
       </div>
     </div>
   </div>
 
-  <!-- МОДАЛКА: УПРАВЛЕНИЕ ГАРАЖОМ -->
-  <div id="garageModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
-    <div class="bg-slate-900 border-t border-slate-800 rounded-t-3xl w-full max-w-lg p-5 space-y-4 max-h-[85vh] overflow-y-auto">
+  <!-- МОДАЛКА 2: ГАРАЖ И УДАЛЕНИЕ -->
+  <div id="garageModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-end justify-center">
+    <div class="bg-slate-900 border-t-2 border-slate-700 rounded-t-3xl w-full max-w-lg p-5 space-y-4 max-h-[85vh] overflow-y-auto">
       <div class="flex justify-between items-center pb-2 border-b border-slate-800">
-        <h3 class="text-sm font-bold text-slate-200">Мой Гараж</h3>
-        <button class="closeModalBtn text-slate-400 hover:text-white p-1"><i class="ph ph-x text-lg"></i></button>
+        <h3 class="text-sm font-black text-white">Гараж автомобилей</h3>
+        <button class="closeModalBtn text-slate-400 hover:text-white p-1"><i class="ph-bold ph-x text-xl"></i></button>
       </div>
 
-      <div id="carsList" class="space-y-2"></div>
+      <div id="carsList" class="space-y-2.5"></div>
 
-      <!-- Форма добавления авто по VIN -->
+      <!-- Добавление авто -->
       <div class="pt-3 border-t border-slate-800 space-y-2.5">
-        <div class="text-xs font-semibold text-slate-300">Добавить автомобиль:</div>
+        <div class="text-xs font-black text-slate-200">Добавить авто:</div>
         <div class="flex gap-2">
-          <input id="newCarVin" type="text" placeholder="VIN-код (17 знаков)" class="flex-1 uppercase font-mono bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none focus:border-blue-500">
-          <button id="decodeVinBtn" class="bg-blue-600 hover:bg-blue-500 px-3 py-2 rounded-xl text-xs font-semibold text-white flex items-center gap-1">
-            <i class="ph ph-sparkle"></i> <span>AI</span>
+          <input id="newCarVin" type="text" placeholder="VIN-код (17 знаков)" class="flex-1 uppercase font-mono bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-400 font-bold outline-none focus:border-blue-500">
+          <button id="decodeVinBtn" class="bg-blue-600 hover:bg-blue-500 px-3 py-2 rounded-xl text-xs font-black text-white flex items-center gap-1 shadow-md">
+            <i class="ph-bold ph-sparkle"></i> <span>AI</span>
           </button>
         </div>
         <div class="grid grid-cols-2 gap-2">
-          <input id="newCarName" type="text" placeholder="Марка и модель" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none">
-          <input id="newCarSub" type="text" placeholder="Двигатель / Год" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none">
+          <input id="newCarName" type="text" placeholder="Марка и модель" class="bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-xs text-white font-bold outline-none">
+          <input id="newCarSub" type="text" placeholder="Двигатель / Год" class="bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-xs text-white font-bold outline-none">
         </div>
-        <input id="newCarKm" type="number" placeholder="Текущий пробег (км)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-slate-200 outline-none">
-        <button id="addNewCarBtn" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition">
-          + Сохранить авто в гараж
+        <input id="newCarKm" type="number" placeholder="Текущий пробег (км)" class="w-full bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-xs font-mono text-white font-bold outline-none">
+        <button id="addNewCarBtn" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white rounded-xl text-xs font-black uppercase tracking-wider transition shadow-lg">
+          + Сохранить авто
         </button>
       </div>
     </div>
   </div>
 
-  <!-- МОДАЛКА: НАСТРОЙКА ИНТЕРВАЛОВ -->
-  <div id="settingsModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-end justify-center">
-    <div class="bg-slate-900 border-t border-slate-800 rounded-t-3xl w-full max-w-lg p-5 space-y-4 max-h-[85vh] overflow-y-auto">
+  <!-- МОДАЛКА 3: ИНТЕРВАЛЫ -->
+  <div id="settingsModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-end justify-center">
+    <div class="bg-slate-900 border-t-2 border-slate-700 rounded-t-3xl w-full max-w-lg p-5 space-y-4 max-h-[85vh] overflow-y-auto">
       <div class="flex justify-between items-center pb-2 border-b border-slate-800">
-        <h3 class="text-sm font-bold text-slate-200">Интервалы ТО (км)</h3>
-        <button class="closeModalBtn text-slate-400 hover:text-white p-1"><i class="ph ph-x text-lg"></i></button>
+        <h3 class="text-sm font-black text-white">Интервалы ТО (в км)</h3>
+        <button class="closeModalBtn text-slate-400 hover:text-white p-1"><i class="ph-bold ph-x text-xl"></i></button>
       </div>
-      <div class="grid grid-cols-2 gap-3 text-xs">
+      <div class="grid grid-cols-2 gap-3 text-xs font-bold">
         <div>
-          <label class="text-slate-400">Масло и фильтр</label>
-          <input id="int-oil" type="number" class="w-full mt-1 bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 font-mono text-slate-200">
+          <label class="text-slate-300">Масло и фильтр</label>
+          <input id="int-oil" type="number" class="w-full mt-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 font-mono text-white">
         </div>
         <div>
-          <label class="text-slate-400">Топливный фильтр</label>
-          <input id="int-fuel_filter" type="number" class="w-full mt-1 bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 font-mono text-slate-200">
+          <label class="text-slate-300">Топливный фильтр</label>
+          <input id="int-fuel_filter" type="number" class="w-full mt-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 font-mono text-white">
         </div>
         <div>
-          <label class="text-slate-400">Воздушный фильтр</label>
-          <input id="int-air_filter" type="number" class="w-full mt-1 bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 font-mono text-slate-200">
+          <label class="text-slate-300">Воздушный фильтр</label>
+          <input id="int-air_filter" type="number" class="w-full mt-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 font-mono text-white">
         </div>
         <div>
-          <label class="text-slate-400">Салонный фильтр</label>
-          <input id="int-cabin_filter" type="number" class="w-full mt-1 bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 font-mono text-slate-200">
+          <label class="text-slate-300">Салонный фильтр</label>
+          <input id="int-cabin_filter" type="number" class="w-full mt-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 font-mono text-white">
         </div>
         <div>
-          <label class="text-slate-400">Комплект ГРМ</label>
-          <input id="int-timing_belt" type="number" class="w-full mt-1 bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 font-mono text-slate-200">
+          <label class="text-slate-300">Ремень ГРМ</label>
+          <input id="int-timing_belt" type="number" class="w-full mt-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 font-mono text-white">
         </div>
         <div>
-          <label class="text-slate-400">Тормозные колодки</label>
-          <input id="int-brake_pads" type="number" class="w-full mt-1 bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 font-mono text-slate-200">
+          <label class="text-slate-300">Колодки</label>
+          <input id="int-brake_pads" type="number" class="w-full mt-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 font-mono text-white">
         </div>
       </div>
-      <button id="saveIntervalsBtn" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition">
+      <button id="saveIntervalsBtn" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-black uppercase tracking-wider transition shadow-lg">
         Сохранить настройки
       </button>
     </div>
   </div>
 
   <script>
+    // Ключ Gemini API
     const GEMINI_API_KEY = "AQ.Ab8RN6IbEB6olRgItP-TsoL9usXfNUNsMvovbkTwEbT2Ohdfgg";
 
-    // Telegram WebApp
     const tg = window.Telegram?.WebApp;
     if (tg) {
       tg.ready();
       tg.expand();
     }
     const userId = tg?.initDataUnsafe?.user?.id || 'default_user';
-    const storageKey = `autolog_app_${userId}`;
+    const storageKey = `autolog_pro_${userId}`;
 
-    // Базовые данные пользователя
     const defaultState = {
       activeCarId: 'car_1',
       cars: [
         {
           id: 'car_1',
           name: 'Opel Astra J',
-          sub: '1.7 CDTI',
+          sub: '1.7 CDTI (130 hp)',
           vin: '',
           currentKm: 218500,
           intervals: {
@@ -332,10 +331,11 @@
     }
 
     function getCar() {
+      if (!appData.cars || appData.cars.length === 0) return null;
       return appData.cars.find(c => c.id === appData.activeCarId) || appData.cars[0];
     }
 
-    // Переключение вкладок внизу
+    // Вкладки
     window.switchTab = (tabName) => {
       document.querySelectorAll('.tab-page').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -349,13 +349,19 @@
       activeBtn.classList.add('text-blue-400');
     };
 
-    // Отрисовка данных
+    // Отрисовка
     function render() {
       const car = getCar();
-      if (!car) return;
+      if (!car) {
+        document.getElementById('hdrCarName').innerText = 'Гараж пуст';
+        document.getElementById('hdrCarSub').innerText = 'Нажмите, чтобы добавить авто';
+        document.getElementById('hdrKmDisplay').innerText = '0 км';
+        document.getElementById('card-oil').innerHTML = `<div class="text-xs text-slate-400 text-center py-4">Добавьте автомобиль через гараж вверху</div>`;
+        return;
+      }
 
       document.getElementById('hdrCarName').innerText = car.name;
-      document.getElementById('hdrCarSub').innerText = car.sub || car.vin || '';
+      document.getElementById('hdrCarSub').innerText = car.sub || car.vin || 'Автомобиль выбран';
       document.getElementById('hdrKmDisplay').innerText = `${car.currentKm.toLocaleString()} км`;
       document.getElementById('aiVinHint').innerText = car.vin ? `VIN: ${car.vin}` : 'VIN: не указан';
       document.getElementById('entryKm').value = car.currentKm;
@@ -364,43 +370,43 @@
       const oilPassed = car.currentKm - (car.lastReplacedKm.oil || 0);
       const oilLeft = car.intervals.oil - oilPassed;
       const oilPct = Math.min(100, Math.max(0, (oilPassed / car.intervals.oil) * 100));
-      const oilBadge = oilLeft > 0 ? `<span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-mono">OK</span>` : `<span class="text-[10px] bg-rose-500/20 text-rose-400 px-2 py-0.5 rounded-full font-mono">ЗАМЕНА</span>`;
+      const oilBadge = oilLeft > 0 ? `<span class="text-[10px] bg-emerald-500/20 text-emerald-400 font-bold px-2 py-0.5 rounded-md border border-emerald-500/30 font-mono">OK</span>` : `<span class="text-[10px] bg-rose-500/20 text-rose-400 font-bold px-2 py-0.5 rounded-md border border-rose-500/30 font-mono">ЗАМЕНА</span>`;
 
       document.getElementById('card-oil').innerHTML = `
-        <div class="flex justify-between items-center text-xs font-bold text-slate-300">
-          <span class="flex items-center gap-1.5"><i class="ph ph-drop text-amber-400"></i> Моторное масло и фильтр</span>
+        <div class="flex justify-between items-center text-xs font-black text-white">
+          <span class="flex items-center gap-1.5"><i class="ph-bold ph-drop text-amber-400 text-sm"></i> Масло и масляный фильтр</span>
           ${oilBadge}
         </div>
-        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+        <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
           <div class="h-full ${oilLeft < 1000 ? 'bg-rose-500' : 'bg-blue-500'} rounded-full transition-all" style="width: ${oilPct}%"></div>
         </div>
-        <div class="flex justify-between text-[11px] text-slate-400 font-mono">
-          <span>Осталось: ${oilLeft > 0 ? oilLeft.toLocaleString() + ' км' : 'Перепробег ' + Math.abs(oilLeft) + ' км'}</span>
-          <span>до ${(car.lastReplacedKm.oil + car.intervals.oil).toLocaleString()} км</span>
+        <div class="flex justify-between text-xs text-slate-300 font-mono font-bold">
+          <span>Осталось: <span class="${oilLeft <= 0 ? 'text-rose-400' : 'text-white'}">${oilLeft > 0 ? oilLeft.toLocaleString() + ' км' : 'Перепробег ' + Math.abs(oilLeft) + ' км'}</span></span>
+          <span class="text-slate-400">до ${(car.lastReplacedKm.oil + car.intervals.oil).toLocaleString()} км</span>
         </div>
       `;
 
-      // Плитки фильтров
+      // Фильтры
       const renderTile = (id, title, key, warn = 2000) => {
         const passed = car.currentKm - (car.lastReplacedKm[key] || 0);
         const int = car.intervals[key] || 15000;
         const left = int - passed;
         const pct = Math.min(100, Math.max(0, (passed / int) * 100));
-        const col = left <= 0 ? 'bg-rose-500' : left < warn ? 'bg-amber-500' : 'bg-emerald-500';
+        const col = left <= 0 ? 'bg-rose-500' : left < warn ? 'bg-amber-400' : 'bg-emerald-400';
 
         document.getElementById(id).innerHTML = `
-          <div class="text-xs text-slate-300 font-medium">${title}</div>
-          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+          <div class="text-xs text-white font-black">${title}</div>
+          <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
             <div class="h-full ${col} rounded-full" style="width: ${pct}%"></div>
           </div>
-          <div class="text-[10px] text-slate-400 font-mono">Ост: ${left > 0 ? left.toLocaleString() : '0'} км</div>
+          <div class="text-[11px] font-mono font-bold text-slate-300">Ост: <span class="${left <= 0 ? 'text-rose-400' : 'text-white'}">${left > 0 ? left.toLocaleString() : '0'} км</span></div>
         `;
       };
 
-      renderTile('card-fuel_filter', 'Топливный фильтр', 'fuel_filter', 3000);
-      renderTile('card-air_filter', 'Воздушный фильтр', 'air_filter');
-      renderTile('card-cabin_filter', 'Салонный фильтр', 'cabin_filter');
-      renderTile('card-spark_plugs', 'Свечи накала/зажиг.', 'spark_plugs', 5000);
+      renderTile('card-fuel_filter', 'Топливный', 'fuel_filter', 3000);
+      renderTile('card-air_filter', 'Воздушный', 'air_filter');
+      renderTile('card-cabin_filter', 'Салонный', 'cabin_filter');
+      renderTile('card-spark_plugs', 'Свечи', 'spark_plugs', 5000);
 
       // Тормоза и ГРМ
       const renderBar = (id, title, key) => {
@@ -409,11 +415,11 @@
         const left = int - passed;
         const pct = Math.min(100, Math.max(0, (passed / int) * 100));
         document.getElementById(id).innerHTML = `
-          <div class="flex justify-between text-xs text-slate-300 mb-1">
-            <span class="font-medium">${title}</span>
-            <span class="text-slate-400 font-mono">Ост: ${left > 0 ? left.toLocaleString() : '0'} км</span>
+          <div class="flex justify-between text-xs text-white font-black mb-1">
+            <span>${title}</span>
+            <span class="text-slate-300 font-mono font-bold">Ост: <span class="${left <= 0 ? 'text-rose-400' : 'text-white'}">${left > 0 ? left.toLocaleString() : '0'} км</span></span>
           </div>
-          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+          <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
             <div class="h-full ${left <= 0 ? 'bg-rose-500' : 'bg-blue-500'} rounded-full" style="width: ${pct}%"></div>
           </div>
         `;
@@ -423,44 +429,44 @@
       renderBar('card-brake_pads', 'Тормозные колодки', 'brake_pads');
       renderBar('card-brake_discs', 'Тормозные диски', 'brake_discs');
 
-      // Список подвески (Вкладка 3)
+      // Подвеска
       const suspList = document.getElementById('suspensionList');
       const suspRecords = (car.records || []).filter(r => r.category === 'suspension');
       if (suspRecords.length === 0) {
-        suspList.innerHTML = `<div class="text-xs text-slate-500 p-4 bg-slate-900/40 rounded-xl text-center">Записей по ходовой пока нет</div>`;
+        suspList.innerHTML = `<div class="text-xs text-slate-400 p-4 bg-slate-900 border border-slate-800 rounded-xl text-center font-medium">Записей по подвеске пока нет</div>`;
       } else {
         suspList.innerHTML = suspRecords.slice().reverse().map(r => `
-          <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 flex justify-between items-center">
+          <div class="bg-slate-900 border border-slate-700 rounded-xl p-3 flex justify-between items-center">
             <div>
-              <div class="text-xs font-semibold text-slate-200">${r.title}</div>
-              <div class="text-[11px] text-slate-400 font-mono">${r.km.toLocaleString()} км</div>
+              <div class="text-xs font-black text-white">${r.title}</div>
+              <div class="text-[11px] text-slate-400 font-mono font-bold">${r.km.toLocaleString()} км</div>
             </div>
-            <div class="text-xs font-mono font-bold text-slate-200">${r.cost || ''}</div>
+            <div class="text-xs font-mono font-black text-amber-400">${r.cost || ''}</div>
           </div>
         `).join('');
       }
 
-      // Полная история (Вкладка 4)
+      // История расходов
       const histList = document.getElementById('fullHistoryList');
       if (!car.records || car.records.length === 0) {
-        histList.innerHTML = `<div class="text-xs text-slate-500 p-4 bg-slate-900/40 rounded-xl text-center">История расходов пуста</div>`;
+        histList.innerHTML = `<div class="text-xs text-slate-400 p-4 bg-slate-900 border border-slate-800 rounded-xl text-center font-medium">История расходов пуста</div>`;
       } else {
         histList.innerHTML = car.records.slice().reverse().map(r => `
-          <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 flex justify-between items-center">
+          <div class="bg-slate-900 border border-slate-700 rounded-xl p-3 flex justify-between items-center">
             <div>
-              <div class="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full ${r.category === 'to' ? 'bg-amber-400' : r.category === 'brakes' ? 'bg-rose-400' : 'bg-blue-400'}"></span>
+              <div class="text-xs font-black text-white flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full ${r.category === 'to' ? 'bg-amber-400' : r.category === 'brakes' ? 'bg-rose-400' : 'bg-blue-400'}"></span>
                 ${r.title}
               </div>
-              <div class="text-[11px] text-slate-400 font-mono">${r.km.toLocaleString()} км</div>
+              <div class="text-[11px] text-slate-400 font-mono font-bold">${r.km.toLocaleString()} км</div>
             </div>
-            <div class="text-xs font-mono font-bold text-slate-200">${r.cost || ''}</div>
+            <div class="text-xs font-mono font-black text-amber-400">${r.cost || ''}</div>
           </div>
         `).join('');
       }
     }
 
-    // Модальные окна
+    // Модалки
     const addModal = document.getElementById('addModal');
     const garageModal = document.getElementById('garageModal');
     const settingsModal = document.getElementById('settingsModal');
@@ -476,9 +482,10 @@
       };
     });
 
-    // Изменение пробега
+    // Одометр
     document.getElementById('updateKmBtn').onclick = () => {
       const car = getCar();
+      if (!car) return;
       const val = prompt('Введите показания одометра (км):', car.currentKm);
       if (val && !isNaN(val)) {
         car.currentKm = parseInt(val, 10);
@@ -486,20 +493,20 @@
       }
     };
 
-    // Сохранение записи
+    // Сохранить запись
     document.getElementById('saveEntryBtn').onclick = () => {
       const car = getCar();
+      if (!car) return alert('Сначала добавьте автомобиль');
       const title = document.getElementById('entryTitle').value.trim();
       const km = parseInt(document.getElementById('entryKm').value, 10) || car.currentKm;
       const cost = document.getElementById('entryCost').value.trim();
 
-      if (!title) return alert('Введите название детали или работы');
+      if (!title) return alert('Введите название работы или детали');
 
       car.currentKm = Math.max(car.currentKm, km);
 
       let detectedCat = 'suspension';
 
-      // Сброс расходников ТО
       const toKeys = ['oil', 'fuel_filter', 'air_filter', 'cabin_filter'];
       toKeys.forEach(k => {
         const chk = document.getElementById(`chk-${k}`);
@@ -510,7 +517,6 @@
         }
       });
 
-      // Сброс тормозов / ГРМ
       ['brake_pads', 'timing_belt'].forEach(k => {
         const chk = document.getElementById(`chk-${k}`);
         if (chk && chk.checked) {
@@ -529,16 +535,22 @@
       saveState();
     };
 
-    // Управление гаражом
+    // Гараж: Список и полное удаление
     function renderGarage() {
       const list = document.getElementById('carsList');
+      if (!appData.cars || appData.cars.length === 0) {
+        list.innerHTML = `<div class="text-xs text-slate-400 text-center py-2">В гараже пока нет машин</div>`;
+        return;
+      }
       list.innerHTML = appData.cars.map(c => `
-        <div class="flex items-center justify-between p-3 rounded-xl border ${c.id === appData.activeCarId ? 'border-blue-500 bg-blue-950/20' : 'border-slate-800 bg-slate-800/40'}">
-          <button onclick="selectCar('${c.id}')" class="text-left flex-1">
-            <div class="text-xs font-bold text-slate-200">${c.name}</div>
-            <div class="text-[10px] text-slate-400 font-mono">${c.sub || ''} | ${c.vin || 'нет VIN'}</div>
+        <div class="flex items-center justify-between p-3 rounded-xl border ${c.id === appData.activeCarId ? 'border-blue-500 bg-blue-950/40' : 'border-slate-700 bg-slate-800/80'}">
+          <button onclick="selectCar('${c.id}')" class="text-left flex-1 min-w-0 pr-2">
+            <div class="text-xs font-black text-white truncate">${c.name}</div>
+            <div class="text-[11px] text-slate-300 font-mono truncate font-semibold">${c.sub || ''} | ${c.vin || 'без VIN'}</div>
           </button>
-          ${appData.cars.length > 1 ? `<button onclick="deleteCar('${c.id}')" class="text-rose-400 p-2"><i class="ph ph-trash text-sm"></i></button>` : ''}
+          <button onclick="deleteCar('${c.id}')" class="text-rose-400 hover:text-white bg-rose-500/20 hover:bg-rose-600 border border-rose-500/40 p-2 rounded-lg flex-shrink-0 transition">
+            <i class="ph-bold ph-trash text-base"></i>
+          </button>
         </div>
       `).join('');
     }
@@ -550,9 +562,13 @@
     };
 
     window.deleteCar = (id) => {
-      if (!confirm('Удалить авто из гаража?')) return;
+      if (!confirm('Вы точно хотите удалить этот автомобиль?')) return;
       appData.cars = appData.cars.filter(c => c.id !== id);
-      if (appData.activeCarId === id) appData.activeCarId = appData.cars[0].id;
+      if (appData.cars.length > 0) {
+        appData.activeCarId = appData.cars[0].id;
+      } else {
+        appData.activeCarId = null;
+      }
       saveState();
       renderGarage();
     };
@@ -571,11 +587,12 @@
         sub,
         vin,
         currentKm: km,
-        intervals: { ...defaultState.cars[0].intervals },
+        intervals: { oil: 10000, fuel_filter: 30000, air_filter: 15000, cabin_filter: 15000, timing_belt: 100000, brake_pads: 35000, brake_discs: 70000, spark_plugs: 60000 },
         lastReplacedKm: { oil: km, fuel_filter: km, air_filter: km, cabin_filter: km, timing_belt: km, brake_pads: km, brake_discs: km, spark_plugs: km },
         records: []
       };
 
+      if (!appData.cars) appData.cars = [];
       appData.cars.push(newCar);
       appData.activeCarId = newCar.id;
       saveState();
@@ -585,6 +602,7 @@
     // Настройка интервалов
     function renderSettings() {
       const car = getCar();
+      if (!car) return;
       ['oil', 'fuel_filter', 'air_filter', 'cabin_filter', 'timing_belt', 'brake_pads'].forEach(k => {
         const inp = document.getElementById(`int-${k}`);
         if (inp) inp.value = car.intervals[k] || 10000;
@@ -593,6 +611,7 @@
 
     document.getElementById('saveIntervalsBtn').onclick = () => {
       const car = getCar();
+      if (!car) return;
       ['oil', 'fuel_filter', 'air_filter', 'cabin_filter', 'timing_belt', 'brake_pads'].forEach(k => {
         const val = parseInt(document.getElementById(`int-${k}`).value, 10);
         if (val) car.intervals[k] = val;
@@ -601,83 +620,130 @@
       settingsModal.classList.add('hidden');
     };
 
-    // AI 1: VIN Decoder
+    // ==========================================
+    // НАДЁЖНЫЙ ВЫЗОВ GEMINI API С СЖАТИЕМ ФОТО
+    // ==========================================
+
+    async function callGemini(contents, jsonMode = true) {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+      const payload = { contents };
+      if (jsonMode) {
+        payload.generationConfig = { responseMimeType: "application/json" };
+      }
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`Gemini Error: ${response.status} - ${errText}`);
+      }
+      const data = await response.json();
+      return data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
+    }
+
+    // Сжатие фото на клиенте, чтобы не висло и не падало
+    function compressImage(file, maxWidth = 1024, quality = 0.75) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+            if (width > maxWidth) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            const dataUrl = canvas.toDataURL('image/jpeg', quality);
+            resolve(dataUrl.split(',')[1]);
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // 1. Декодер VIN
     document.getElementById('decodeVinBtn').onclick = async () => {
       const vin = document.getElementById('newCarVin').value.trim().toUpperCase();
-      if (!vin || vin.length < 11) return alert('Введите корректный VIN');
+      if (!vin || vin.length < 11) return alert('Введите корректный VIN-код');
 
       const btn = document.getElementById('decodeVinBtn');
-      btn.innerHTML = `<i class="ph ph-spinner animate-spin"></i>`;
+      btn.innerHTML = `<i class="ph-bold ph-spinner animate-spin"></i>`;
 
       try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{
-              parts: [{ text: `Расшифруй VIN: "${vin}". Ответь строго JSON без markdown: {"brand_model": "Марка и модель", "engine_year": "Объем, тип мотора, год"}` }]
-            }]
-          })
-        });
-        const d = await res.json();
-        let raw = d.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
-        raw = raw.replace(/```json/g, '').replace(/```/g, '').trim();
-        const json = JSON.parse(raw);
-        if (json.brand_model) document.getElementById('newCarName').value = json.brand_model;
-        if (json.engine_year) document.getElementById('newCarSub').value = json.engine_year;
+        const text = await callGemini([{
+          parts: [{ text: `Расшифруй VIN: "${vin}". Ответь JSON: {"brand_model": "Марка и модель", "engine_year": "Объем, мощность, топливо, год"}` }]
+        }], true);
+        const res = JSON.parse(text);
+        if (res.brand_model) document.getElementById('newCarName').value = res.brand_model;
+        if (res.engine_year) document.getElementById('newCarSub').value = res.engine_year;
       } catch (err) {
-        alert('Не удалось расшифровать VIN. Введите вручную.');
+        alert('Не удалось расшифровать через AI. Введите данные вручную.');
       } finally {
-        btn.innerHTML = `<i class="ph ph-sparkle"></i> <span>AI</span>`;
+        btn.innerHTML = `<i class="ph-bold ph-sparkle"></i> <span>AI</span>`;
       }
     };
 
-    // AI 2: Разбор фото запчасти / чека
+    // 2. Распознавание запчасти по фото
     document.getElementById('aiPhotoInput').onchange = async (e) => {
       const file = e.target.files[0];
       if (!file) return;
 
       const status = document.getElementById('photoStatusText');
-      status.innerText = 'AI анализирует фото...';
+      status.innerText = 'Сжатие и анализ фото через AI...';
 
-      const reader = new FileReader();
-      reader.onload = async () => {
-        const base64 = reader.result.split(',')[1];
-        try {
-          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{
-                parts: [
-                  { text: 'Распознай на фото деталь или чек: бренд, название, артикул, стоимость. Цены пиши только в PLN или грн. Ответь строго JSON: {"title": "Название и артикул", "cost": "Сумма и валюта", "is_oil": boolean, "is_fuel_filter": boolean, "is_air_filter": boolean, "is_cabin_filter": boolean, "is_brake": boolean}' },
-                  { inline_data: { mime_type: file.type || 'image/jpeg', data: base64 } }
-                ]
-              }]
-            })
-          });
-          const d = await res.json();
-          let raw = d.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
-          raw = raw.replace(/```json/g, '').replace(/```/g, '').trim();
-          const info = JSON.parse(raw);
+      try {
+        const base64Data = await compressImage(file);
+        const prompt = `На фотографии изображена деталь автомобиля, коробка или чек.
+Определи:
+1. Название детали, бренд и артикул (код).
+2. Стоимость (если есть на чеке/коробке, иначе оставь пустым). Цены только в PLN или UAH.
+3. Какая это категория: масло, топливный фильтр, воздушный, салонный, тормоза или ГРМ.
 
-          if (info.title) document.getElementById('entryTitle').value = info.title;
-          if (info.cost) document.getElementById('entryCost').value = info.cost;
-          if (info.is_oil) document.getElementById('chk-oil').checked = true;
-          if (info.is_fuel_filter) document.getElementById('chk-fuel_filter').checked = true;
-          if (info.is_air_filter) document.getElementById('chk-air_filter').checked = true;
-          if (info.is_cabin_filter) document.getElementById('chk-cabin_filter').checked = true;
-          if (info.is_brake) document.getElementById('chk-brake_pads').checked = true;
+Ответь строго JSON:
+{
+  "title": "Бренд, название детали и артикул",
+  "cost": "Цена и валюта или пусто",
+  "is_oil": boolean,
+  "is_fuel_filter": boolean,
+  "is_air_filter": boolean,
+  "is_cabin_filter": boolean,
+  "is_brake": boolean,
+  "is_timing_belt": boolean
+}`;
 
-          status.innerText = 'Фото успешно обработано!';
-        } catch (err) {
-          status.innerText = 'Ошибка разбора фото. Заполните поля вручную.';
-        }
-      };
-      reader.readAsDataURL(file);
+        const text = await callGemini([{
+          parts: [
+            { text: prompt },
+            { inline_data: { mime_type: "image/jpeg", data: base64Data } }
+          ]
+        }], true);
+
+        const info = JSON.parse(text);
+        if (info.title) document.getElementById('entryTitle').value = info.title;
+        if (info.cost) document.getElementById('entryCost').value = info.cost;
+        if (info.is_oil) document.getElementById('chk-oil').checked = true;
+        if (info.is_fuel_filter) document.getElementById('chk-fuel_filter').checked = true;
+        if (info.is_air_filter) document.getElementById('chk-air_filter').checked = true;
+        if (info.is_cabin_filter) document.getElementById('chk-cabin_filter').checked = true;
+        if (info.is_brake) document.getElementById('chk-brake_pads').checked = true;
+        if (info.is_timing_belt) document.getElementById('chk-timing_belt').checked = true;
+
+        status.innerText = 'Деталь распознана успешно!';
+      } catch (err) {
+        status.innerText = 'Ошибка разбора фото. Заполните вручную.';
+      }
     };
 
-    // AI 3: Подбор деталей
+    // 3. Подбор артикулов
     document.getElementById('aiFindPartBtn').onclick = async () => {
       const q = document.getElementById('aiPartQuery').value.trim();
       const car = getCar();
@@ -685,22 +751,15 @@
 
       const resBox = document.getElementById('aiPartResult');
       resBox.classList.remove('hidden');
-      resBox.innerText = 'Подбираю запчасти по каталогу...';
+      resBox.innerText = 'Подбираю артикулы...';
 
       try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{
-              parts: [{ text: `Автомобиль: ${car.name} (${car.sub}), VIN: ${car.vin || 'не указан'}. Запрос детали: "${q}". Подбери оригинальный OEM-номер и 2-3 надёжных кросс-артикула (Mann, Bosch, Lemforder, TRW). Цены если упоминаешь, то только в PLN или грн. Выдай чётким списком.` }]
-            }]
-          })
-        });
-        const d = await res.json();
-        resBox.innerText = d.candidates?.[0]?.content?.parts?.[0]?.text || 'Ничего не найдено';
+        const text = await callGemini([{
+          parts: [{ text: `Автомобиль: ${car ? car.name + ' ' + car.sub : 'Не указан'}, VIN: ${car ? car.vin : 'Не указан'}. Запрос: "${q}". Подбери OEM-номер и 2-3 надежных кросс-номера (Mann, Bosch, Lemforder, TRW, Gates). Если пишешь примерные цены, используй только PLN или грн. Выдай чётким списком с кодами запчастей.` }]
+        }], false);
+        resBox.innerText = text || 'Ничего не найдено';
       } catch (e) {
-        resBox.innerText = 'Ошибка связи с каталогом AI.';
+        resBox.innerText = 'Ошибка при запросе к AI.';
       }
     };
 
