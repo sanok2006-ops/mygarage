@@ -12,7 +12,7 @@
       background-color: #070b14;
       color: #ffffff;
       -webkit-tap-highlight-color: transparent;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
     .custom-scroll::-webkit-scrollbar { display: none; }
   </style>
@@ -20,132 +20,112 @@
 <body class="min-h-screen pb-24 antialiased select-none custom-scroll">
 
   <!-- ШАПКА: АВТО И ПРОБЕГ -->
-  <header class="sticky top-0 z-30 bg-[#0d1527] border-b border-slate-700/80 px-4 py-3 shadow-lg">
+  <header class="sticky top-0 z-30 bg-[#0d1527] border-b border-slate-700/80 px-3 py-2.5 shadow-lg">
     <div class="flex items-center justify-between gap-2 max-w-lg mx-auto">
-      <button id="garageBtn" class="flex items-center gap-2.5 bg-slate-800 hover:bg-slate-700/90 px-3.5 py-2 rounded-xl border border-slate-600 transition text-left flex-1 min-w-0">
-        <i class="ph-bold ph-car text-blue-400 text-xl flex-shrink-0"></i>
+      <button id="garageBtn" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-xl border border-slate-600 transition text-left flex-1 min-w-0">
+        <i class="ph-bold ph-car text-blue-400 text-lg flex-shrink-0"></i>
         <div class="min-w-0 flex-1">
-          <div class="flex items-center gap-1.5">
-            <span id="hdrCarName" class="text-sm font-black text-white truncate tracking-wide">Загрузка...</span>
-            <i class="ph-bold ph-caret-down text-slate-300 text-xs"></i>
+          <div class="flex items-center gap-1">
+            <span id="hdrCarName" class="text-xs font-black text-white truncate">Мой Автомобиль</span>
+            <i class="ph-bold ph-caret-down text-slate-400 text-[10px]"></i>
           </div>
-          <div id="hdrCarSub" class="text-xs text-slate-300 font-semibold truncate">...</div>
+          <div id="hdrCarSub" class="text-[10px] text-slate-300 font-semibold truncate">Выбрать авто</div>
         </div>
       </button>
 
-      <div class="flex items-center gap-1.5 bg-slate-800 px-3 py-2 rounded-xl border border-slate-600 flex-shrink-0">
-        <i class="ph-bold ph-gauge text-amber-400 text-base"></i>
-        <span id="hdrKmDisplay" class="font-mono text-xs font-black text-white tracking-wider">0 км</span>
-        <button id="updateKmBtn" class="text-blue-400 hover:text-white p-1 ml-0.5">
-          <i class="ph-bold ph-pencil-simple text-sm"></i>
+      <div class="flex items-center gap-1 bg-slate-800 px-2.5 py-1.5 rounded-xl border border-slate-600 flex-shrink-0">
+        <i class="ph-bold ph-gauge text-amber-400 text-sm"></i>
+        <span id="hdrKmDisplay" class="font-mono text-xs font-black text-white">0 км</span>
+        <button id="updateKmBtn" class="text-blue-400 hover:text-white p-0.5 ml-0.5">
+          <i class="ph-bold ph-pencil-simple text-xs"></i>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- ОСНОВНОЙ ЭКРАН -->
-  <main class="px-4 py-4 max-w-lg mx-auto space-y-4">
+  <!-- ОСНОВНОЙ ЭКРАН ПО ВКЛАДКАМ -->
+  <main class="px-3 py-3 max-w-lg mx-auto space-y-3">
 
     <!-- ВКЛАДКА 1: ТО И ЖИДКОСТИ -->
-    <div id="tabContent-to" class="tab-page space-y-3.5">
+    <div id="tabContent-to" class="tab-page space-y-3">
       <div class="flex items-center justify-between px-1">
-        <h2 class="text-xs font-black uppercase tracking-wider text-slate-200 flex items-center gap-1.5">
-          <i class="ph-bold ph-drop text-amber-400"></i> Регламент ТО и жидкости
+        <h2 class="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-1">
+          <i class="ph-bold ph-drop text-amber-400"></i> Регламент ТО
         </h2>
-        <button id="openSettingsBtn" class="text-xs font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-500/10 border border-blue-500/30 px-2.5 py-1 rounded-lg">
+        <button id="openSettingsBtn" class="text-[11px] font-bold text-blue-400 bg-blue-500/10 border border-blue-500/30 px-2 py-0.5 rounded-lg flex items-center gap-1">
           <i class="ph-bold ph-gear"></i> Настроить км
         </button>
       </div>
 
-      <!-- Масло -->
-      <div id="card-oil" class="bg-slate-900 border border-slate-700 rounded-2xl p-4 space-y-2.5 shadow-md"></div>
+      <!-- Карточка масла -->
+      <div id="card-oil" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-2 shadow"></div>
 
-      <!-- Фильтры и жидкости -->
-      <div class="grid grid-cols-2 gap-2.5">
-        <div id="card-fuel_filter" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-2"></div>
-        <div id="card-air_filter" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-2"></div>
-        <div id="card-cabin_filter" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-2"></div>
-        <div id="card-antifreeze" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-2"></div>
-        <div id="card-brake_fluid" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-2"></div>
-        <div id="card-spark_plugs" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-2"></div>
+      <!-- Сетка фильтров и жидкостей -->
+      <div class="grid grid-cols-2 gap-2">
+        <div id="card-fuel_filter" class="bg-slate-900 border border-slate-700 rounded-xl p-2.5 space-y-1.5"></div>
+        <div id="card-air_filter" class="bg-slate-900 border border-slate-700 rounded-xl p-2.5 space-y-1.5"></div>
+        <div id="card-cabin_filter" class="bg-slate-900 border border-slate-700 rounded-xl p-2.5 space-y-1.5"></div>
+        <div id="card-antifreeze" class="bg-slate-900 border border-slate-700 rounded-xl p-2.5 space-y-1.5"></div>
+        <div id="card-brake_fluid" class="bg-slate-900 border border-slate-700 rounded-xl p-2.5 space-y-1.5"></div>
+        <div id="card-spark_plugs" class="bg-slate-900 border border-slate-700 rounded-xl p-2.5 space-y-1.5"></div>
       </div>
     </div>
 
     <!-- ВКЛАДКА 2: ТОРМОЗА, ГРМ И ПОМПА (ФАКТ ПРОБЕГА) -->
-    <div id="tabContent-brakes" class="tab-page space-y-3.5 hidden">
+    <div id="tabContent-brakes" class="tab-page space-y-3 hidden">
       <div class="px-1 flex justify-between items-center">
-        <h2 class="text-xs font-black uppercase tracking-wider text-slate-200 flex items-center gap-1.5">
+        <h2 class="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-1">
           <i class="ph-bold ph-disc text-rose-400"></i> Тормозная система
         </h2>
-        <span class="text-[10px] text-slate-400 font-medium">Фиксация пробега</span>
       </div>
 
-      <div class="grid grid-cols-2 gap-2.5">
-        <div id="node-brake_pads_front" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-1"></div>
-        <div id="node-brake_pads_rear" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-1"></div>
-        <div id="node-brake_discs_front" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-1"></div>
-        <div id="node-brake_discs_rear" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-1"></div>
+      <div class="grid grid-cols-2 gap-2">
+        <div id="node-brake_pads_front" class="bg-slate-900 border border-slate-700 rounded-xl p-2.5"></div>
+        <div id="node-brake_pads_rear" class="bg-slate-900 border border-slate-700 rounded-xl p-2.5"></div>
+        <div id="node-brake_discs_front" class="bg-slate-900 border border-slate-700 rounded-xl p-2.5"></div>
+        <div id="node-brake_discs_rear" class="bg-slate-900 border border-slate-700 rounded-xl p-2.5"></div>
       </div>
 
-      <div class="px-1 pt-2">
-        <h2 class="text-xs font-black uppercase tracking-wider text-slate-200 flex items-center gap-1.5">
+      <div class="px-1 pt-1">
+        <h2 class="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-1">
           <i class="ph-bold ph-arrows-clockwise text-blue-400"></i> Привод ГРМ и Охлаждение
         </h2>
       </div>
 
-      <div class="grid grid-cols-2 gap-2.5">
-        <div id="node-timing_belt" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-1"></div>
-        <div id="node-water_pump" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-1"></div>
+      <div class="grid grid-cols-2 gap-2">
+        <div id="node-timing_belt" class="bg-slate-900 border border-slate-700 rounded-xl p-2.5"></div>
+        <div id="node-water_pump" class="bg-slate-900 border border-slate-700 rounded-xl p-2.5"></div>
       </div>
     </div>
 
     <!-- ВКЛАДКА 3: ДВИГАТЕЛЬ И ХОДОВАЯ -->
-    <div id="tabContent-engine" class="tab-page space-y-3.5 hidden">
-      <h2 class="text-xs font-black uppercase tracking-wider text-slate-200 flex items-center gap-1.5 px-1">
-        <i class="ph-bold ph-wrench text-blue-400"></i> Двигатель, подвеска и ремонты
+    <div id="tabContent-engine" class="tab-page space-y-3 hidden">
+      <h2 class="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-1 px-1">
+        <i class="ph-bold ph-wrench text-blue-400"></i> Мотор, ходовая и ремонты
       </h2>
-      <div id="engineSuspList" class="space-y-2.5"></div>
+      <div id="engineSuspList" class="space-y-2"></div>
     </div>
 
-    <!-- ВКЛАДКА 4: ИСТОРИЯ, РАСХОДЫ И AI ПОДБОР -->
-    <div id="tabContent-history" class="tab-page space-y-4 hidden">
-      <!-- Сводка расходов -->
-      <div class="bg-gradient-to-r from-slate-900 to-blue-950/40 border border-slate-700 rounded-2xl p-4 flex justify-between items-center shadow-lg">
+    <!-- ВКЛАДКА 4: ИСТОРИЯ И РАСХОДЫ -->
+    <div id="tabContent-history" class="tab-page space-y-3 hidden">
+      <!-- Общие затраты -->
+      <div class="bg-slate-900 border border-slate-700 rounded-xl p-3 flex justify-between items-center shadow">
         <div>
-          <div class="text-[11px] text-slate-400 uppercase font-black tracking-wider">Всего вложено в авто</div>
-          <div id="totalCostDisplay" class="text-xl font-black text-amber-400 font-mono mt-0.5">0</div>
+          <div class="text-[10px] text-slate-400 uppercase font-black">Всего потрачено</div>
+          <div id="totalCostDisplay" class="text-lg font-black text-amber-400 font-mono mt-0.5">0 PLN</div>
         </div>
-        <i class="ph-bold ph-coins text-3xl text-amber-400/60"></i>
+        <i class="ph-bold ph-coins text-2xl text-amber-400/70"></i>
       </div>
 
-      <!-- Сравнение последнего и предпоследнего ТО -->
-      <div class="space-y-2.5">
-        <h3 class="text-xs font-black uppercase tracking-wider text-slate-200 px-1">Сравнение последних ТО</h3>
-        <div class="grid grid-cols-2 gap-2.5">
-          <div id="lastToCard" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-1.5 text-xs"></div>
-          <div id="prevToCard" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-1.5 text-xs"></div>
-        </div>
+      <!-- Сравнение ТО -->
+      <div class="grid grid-cols-2 gap-2">
+        <div id="lastToCard" class="bg-slate-900 border border-slate-700 rounded-xl p-2.5 space-y-1 text-xs"></div>
+        <div id="prevToCard" class="bg-slate-900 border border-slate-700 rounded-xl p-2.5 space-y-1 text-xs"></div>
       </div>
 
-      <!-- AI Каталог запчастей -->
-      <section class="bg-slate-900 border border-blue-500/40 rounded-2xl p-4 space-y-3 shadow-md">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-black text-blue-300 flex items-center gap-1.5">
-            <i class="ph-bold ph-sparkle text-blue-400 text-sm"></i> AI-подбор артикулов
-          </span>
-          <span class="text-[11px] text-slate-300 font-mono font-bold" id="aiVinHint">VIN: Не указан</span>
-        </div>
-        <div class="flex gap-2">
-          <input id="aiPartQuery" type="text" placeholder="Напр.: форсунка или прокладка клапанной" class="flex-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-400 outline-none focus:border-blue-400 font-semibold">
-          <button id="aiFindPartBtn" class="bg-blue-600 hover:bg-blue-500 active:scale-95 px-4 py-2 rounded-xl text-xs font-black text-white transition flex items-center gap-1 shadow-md">
-            <span>Найти</span>
-          </button>
-        </div>
-        <div id="aiPartResult" class="text-xs text-white bg-slate-800/90 p-3 rounded-xl border border-slate-700 hidden whitespace-pre-line leading-relaxed font-mono"></div>
-      </section>
-
-      <div>
-        <h3 class="text-xs font-black uppercase tracking-wider text-slate-200 mb-2 px-1">Хронология всех затрат</h3>
+      <!-- Список истории -->
+      <div class="space-y-2">
+        <h3 class="text-xs font-black uppercase tracking-wider text-slate-300 px-1">Лента обслуживания</h3>
         <div id="fullHistoryList" class="space-y-2"></div>
       </div>
     </div>
@@ -153,262 +133,246 @@
   </main>
 
   <!-- ПЛАВАЮЩАЯ КНОПКА (+) -->
-  <button id="openAddModalBtn" class="fixed bottom-20 right-5 w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-500 active:scale-90 text-white flex items-center justify-center shadow-2xl shadow-blue-600/60 z-40 border-2 border-blue-400/40 transition">
-    <i class="ph-bold ph-plus text-2xl font-black"></i>
+  <button id="openAddModalBtn" class="fixed bottom-16 right-4 w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-500 active:scale-90 text-white flex items-center justify-center shadow-xl z-40 border border-blue-400/40 transition">
+    <i class="ph-bold ph-plus text-xl font-black"></i>
   </button>
 
-  <!-- НАВБАР -->
-  <nav class="fixed bottom-0 left-0 right-0 z-30 bg-[#0d1527] border-t border-slate-700 flex justify-around py-2.5 px-2 max-w-lg mx-auto shadow-2xl">
-    <button onclick="switchTab('to')" id="navBtn-to" class="nav-btn flex flex-col items-center gap-1 text-blue-400 font-bold">
-      <i class="ph-bold ph-drop text-xl"></i>
-      <span class="text-[11px]">ТО/Масла</span>
+  <!-- НАВИГАЦИЯ ВНИЗУ -->
+  <nav class="fixed bottom-0 left-0 right-0 z-30 bg-[#0d1527] border-t border-slate-700 flex justify-around py-2 px-1 max-w-lg mx-auto shadow-2xl">
+    <button onclick="switchTab('to')" id="navBtn-to" class="nav-btn flex flex-col items-center gap-0.5 text-blue-400 font-bold">
+      <i class="ph-bold ph-drop text-lg"></i>
+      <span class="text-[10px]">ТО</span>
     </button>
-    <button onclick="switchTab('brakes')" id="navBtn-brakes" class="nav-btn flex flex-col items-center gap-1 text-slate-400 font-bold">
-      <i class="ph-bold ph-disc text-xl"></i>
-      <span class="text-[11px]">Тормоза/ГРМ</span>
+    <button onclick="switchTab('brakes')" id="navBtn-brakes" class="nav-btn flex flex-col items-center gap-0.5 text-slate-400 font-bold">
+      <i class="ph-bold ph-disc text-lg"></i>
+      <span class="text-[10px]">Тормоза/ГРМ</span>
     </button>
-    <button onclick="switchTab('engine')" id="navBtn-engine" class="nav-btn flex flex-col items-center gap-1 text-slate-400 font-bold">
-      <i class="ph-bold ph-wrench text-xl"></i>
-      <span class="text-[11px]">Мотор/Ремонт</span>
+    <button onclick="switchTab('engine')" id="navBtn-engine" class="nav-btn flex flex-col items-center gap-0.5 text-slate-400 font-bold">
+      <i class="ph-bold ph-wrench text-lg"></i>
+      <span class="text-[10px]">Мотор/Ходовая</span>
     </button>
-    <button onclick="switchTab('history')" id="navBtn-history" class="nav-btn flex flex-col items-center gap-1 text-slate-400 font-bold">
-      <i class="ph-bold ph-receipt text-xl"></i>
-      <span class="text-[11px]">История/Цены</span>
+    <button onclick="switchTab('history')" id="navBtn-history" class="nav-btn flex flex-col items-center gap-0.5 text-slate-400 font-bold">
+      <i class="ph-bold ph-receipt text-lg"></i>
+      <span class="text-[10px]">История/Цены</span>
     </button>
   </nav>
 
-  <!-- МОДАЛКА: СТРУКТУРИРОВАННЫЙ ВВОД С ОТДЕЛЬНЫМИ ЦЕНАМИ И ПОЗИЦИЯМИ -->
-  <div id="addModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-end justify-center">
-    <div class="bg-slate-900 border-t-2 border-slate-700 rounded-t-3xl w-full max-w-lg p-5 space-y-4 max-h-[92vh] overflow-y-auto">
-      <div class="flex justify-between items-center pb-2 border-b border-slate-800">
-        <h3 class="text-sm font-black text-white">Новая запись обслуживания</h3>
-        <button class="closeModalBtn text-slate-400 hover:text-white p-1"><i class="ph-bold ph-x text-xl"></i></button>
+  <!-- МОДАЛКА: ДОБАВИТЬ ЗАПИСЬ (КОМПАКТНАЯ, ВСЁ ВЛАЗИТ) -->
+  <div id="addModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-end justify-center">
+    <div class="bg-slate-900 border-t-2 border-slate-700 rounded-t-2xl w-full max-w-lg p-4 space-y-3 max-h-[92vh] overflow-y-auto">
+      <div class="flex justify-between items-center pb-1 border-b border-slate-800">
+        <h3 class="text-xs font-black text-white uppercase">Добавить обслуживание</h3>
+        <button class="closeModalBtn text-slate-400 hover:text-white p-1"><i class="ph-bold ph-x text-lg"></i></button>
       </div>
 
-      <!-- Фото AI -->
-      <label class="w-full py-2.5 px-4 border-2 border-dashed border-blue-500/50 bg-blue-500/10 hover:bg-blue-500/20 rounded-2xl flex items-center justify-center gap-2 text-blue-300 font-bold transition cursor-pointer">
-        <i class="ph-bold ph-camera text-2xl text-blue-400"></i>
-        <span id="photoStatusText" class="text-xs">Распознать деталь или чек через AI</span>
-        <input id="aiPhotoInput" type="file" accept="image/*" class="hidden">
-      </label>
-
-      <!-- Выбор категории -->
-      <div class="space-y-1">
-        <label class="text-xs text-slate-300 font-bold">Раздел работ:</label>
-        <div class="grid grid-cols-4 gap-1.5">
-          <button type="button" onclick="setEntryCategory('to')" id="catBtn-to" class="cat-sel-btn py-2 text-[11px] font-black rounded-xl border border-blue-500 bg-blue-600 text-white">ТО</button>
-          <button type="button" onclick="setEntryCategory('brakes')" id="catBtn-brakes" class="cat-sel-btn py-2 text-[11px] font-black rounded-xl border border-slate-700 bg-slate-800 text-slate-300">Тормоза</button>
-          <button type="button" onclick="setEntryCategory('engine')" id="catBtn-engine" class="cat-sel-btn py-2 text-[11px] font-black rounded-xl border border-slate-700 bg-slate-800 text-slate-300">Мотор</button>
-          <button type="button" onclick="setEntryCategory('suspension')" id="catBtn-suspension" class="cat-sel-btn py-2 text-[11px] font-black rounded-xl border border-slate-700 bg-slate-800 text-slate-300">Ходовая/Другое</button>
-        </div>
+      <!-- Категории кнопками -->
+      <div class="grid grid-cols-4 gap-1">
+        <button type="button" onclick="setEntryCategory('to')" id="catBtn-to" class="cat-sel-btn py-1.5 text-[10px] font-black rounded-lg border border-blue-500 bg-blue-600 text-white">ТО</button>
+        <button type="button" onclick="setEntryCategory('brakes')" id="catBtn-brakes" class="cat-sel-btn py-1.5 text-[10px] font-black rounded-lg border border-slate-700 bg-slate-800 text-slate-300">Тормоза</button>
+        <button type="button" onclick="setEntryCategory('engine')" id="catBtn-engine" class="cat-sel-btn py-1.5 text-[10px] font-black rounded-lg border border-slate-700 bg-slate-800 text-slate-300">Мотор</button>
+        <button type="button" onclick="setEntryCategory('suspension')" id="catBtn-suspension" class="cat-sel-btn py-1.5 text-[10px] font-black rounded-lg border border-slate-700 bg-slate-800 text-slate-300">Ходовая</button>
       </div>
 
-      <!-- БЛОК 1: ТО И ЖИДКОСТИ (КАЖДАЯ СВОЯ ЦЕНА) -->
-      <div id="section-to-items" class="space-y-2 bg-slate-800/60 p-3 rounded-2xl border border-slate-700/80">
-        <div class="text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1">Детали и отдельные цены:</div>
+      <!-- БЛОК ТО (Компактные строки) -->
+      <div id="section-to-items" class="space-y-1.5 bg-slate-800/60 p-2.5 rounded-xl border border-slate-700">
+        <div class="text-[10px] font-bold text-slate-400 uppercase mb-1">Расходники и цены:</div>
 
         <!-- Масло -->
-        <div class="flex items-center gap-1.5">
-          <input type="checkbox" id="itemChk-oil" class="w-4 h-4 rounded text-blue-600">
-          <span class="text-xs font-bold text-white w-24 flex-shrink-0">Масло</span>
-          <input type="text" id="itemVal-oil" list="list-oil" placeholder="Mobil 5W-30 3000 XE" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs text-white outline-none">
-          <input type="text" id="itemCost-oil" placeholder="Цена" class="w-20 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs font-mono text-white outline-none text-right">
+        <div class="flex items-center gap-1 text-xs">
+          <input type="checkbox" id="itemChk-oil" class="w-4 h-4 rounded text-blue-600 flex-shrink-0">
+          <span class="w-16 font-bold truncate">Масло</span>
+          <input type="text" id="itemVal-oil" list="list-oil" placeholder="Бренд / вязкость" class="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none">
+          <input type="text" id="itemCost-oil" placeholder="Цена" class="w-14 bg-slate-800 border border-slate-600 rounded px-1.5 py-1 text-xs font-mono text-white text-right outline-none flex-shrink-0">
           <datalist id="list-oil"></datalist>
         </div>
 
-        <!-- Масляный фильтр -->
-        <div class="flex items-center gap-1.5">
-          <input type="checkbox" id="itemChk-oil_filter" class="w-4 h-4 rounded text-blue-600">
-          <span class="text-xs font-bold text-white w-24 flex-shrink-0">Фильтр масла</span>
-          <input type="text" id="itemVal-oil_filter" list="list-oil_filter" placeholder="Mann HU 711/6 z" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs text-white outline-none">
-          <input type="text" id="itemCost-oil_filter" placeholder="Цена" class="w-20 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs font-mono text-white outline-none text-right">
+        <!-- Масляный -->
+        <div class="flex items-center gap-1 text-xs">
+          <input type="checkbox" id="itemChk-oil_filter" class="w-4 h-4 rounded text-blue-600 flex-shrink-0">
+          <span class="w-16 font-bold truncate">Ф-р масла</span>
+          <input type="text" id="itemVal-oil_filter" list="list-oil_filter" placeholder="Артикул / фирма" class="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none">
+          <input type="text" id="itemCost-oil_filter" placeholder="Цена" class="w-14 bg-slate-800 border border-slate-600 rounded px-1.5 py-1 text-xs font-mono text-white text-right outline-none flex-shrink-0">
           <datalist id="list-oil_filter"></datalist>
         </div>
 
-        <!-- Топливный фильтр -->
-        <div class="flex items-center gap-1.5">
-          <input type="checkbox" id="itemChk-fuel_filter" class="w-4 h-4 rounded text-blue-600">
-          <span class="text-xs font-bold text-white w-24 flex-shrink-0">Топливный</span>
-          <input type="text" id="itemVal-fuel_filter" list="list-fuel_filter" placeholder="Mann PU 9001 x" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs text-white outline-none">
-          <input type="text" id="itemCost-fuel_filter" placeholder="Цена" class="w-20 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs font-mono text-white outline-none text-right">
+        <!-- Топливный -->
+        <div class="flex items-center gap-1 text-xs">
+          <input type="checkbox" id="itemChk-fuel_filter" class="w-4 h-4 rounded text-blue-600 flex-shrink-0">
+          <span class="w-16 font-bold truncate">Топливный</span>
+          <input type="text" id="itemVal-fuel_filter" list="list-fuel_filter" placeholder="Артикул / фирма" class="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none">
+          <input type="text" id="itemCost-fuel_filter" placeholder="Цена" class="w-14 bg-slate-800 border border-slate-600 rounded px-1.5 py-1 text-xs font-mono text-white text-right outline-none flex-shrink-0">
           <datalist id="list-fuel_filter"></datalist>
         </div>
 
-        <!-- Воздушный фильтр -->
-        <div class="flex items-center gap-1.5">
-          <input type="checkbox" id="itemChk-air_filter" class="w-4 h-4 rounded text-blue-600">
-          <span class="text-xs font-bold text-white w-24 flex-shrink-0">Воздушный</span>
-          <input type="text" id="itemVal-air_filter" list="list-air_filter" placeholder="Mann C 26 106" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs text-white outline-none">
-          <input type="text" id="itemCost-air_filter" placeholder="Цена" class="w-20 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs font-mono text-white outline-none text-right">
+        <!-- Воздушный -->
+        <div class="flex items-center gap-1 text-xs">
+          <input type="checkbox" id="itemChk-air_filter" class="w-4 h-4 rounded text-blue-600 flex-shrink-0">
+          <span class="w-16 font-bold truncate">Воздушный</span>
+          <input type="text" id="itemVal-air_filter" list="list-air_filter" placeholder="Артикул / фирма" class="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none">
+          <input type="text" id="itemCost-air_filter" placeholder="Цена" class="w-14 bg-slate-800 border border-slate-600 rounded px-1.5 py-1 text-xs font-mono text-white text-right outline-none flex-shrink-0">
           <datalist id="list-air_filter"></datalist>
         </div>
 
-        <!-- Салонный фильтр -->
-        <div class="flex items-center gap-1.5">
-          <input type="checkbox" id="itemChk-cabin_filter" class="w-4 h-4 rounded text-blue-600">
-          <span class="text-xs font-bold text-white w-24 flex-shrink-0">Салонный</span>
-          <input type="text" id="itemVal-cabin_filter" list="list-cabin_filter" placeholder="Mann CUK 2442" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs text-white outline-none">
-          <input type="text" id="itemCost-cabin_filter" placeholder="Цена" class="w-20 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs font-mono text-white outline-none text-right">
+        <!-- Салонный -->
+        <div class="flex items-center gap-1 text-xs">
+          <input type="checkbox" id="itemChk-cabin_filter" class="w-4 h-4 rounded text-blue-600 flex-shrink-0">
+          <span class="w-16 font-bold truncate">Салонный</span>
+          <input type="text" id="itemVal-cabin_filter" list="list-cabin_filter" placeholder="Артикул / фирма" class="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none">
+          <input type="text" id="itemCost-cabin_filter" placeholder="Цена" class="w-14 bg-slate-800 border border-slate-600 rounded px-1.5 py-1 text-xs font-mono text-white text-right outline-none flex-shrink-0">
           <datalist id="list-cabin_filter"></datalist>
         </div>
 
         <!-- Антифриз -->
-        <div class="flex items-center gap-1.5">
-          <input type="checkbox" id="itemChk-antifreeze" class="w-4 h-4 rounded text-blue-600">
-          <span class="text-xs font-bold text-white w-24 flex-shrink-0">Антифриз</span>
-          <input type="text" id="itemVal-antifreeze" list="list-antifreeze" placeholder="HEPU G12 Красный 5L" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs text-white outline-none">
-          <input type="text" id="itemCost-antifreeze" placeholder="Цена" class="w-20 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs font-mono text-white outline-none text-right">
+        <div class="flex items-center gap-1 text-xs">
+          <input type="checkbox" id="itemChk-antifreeze" class="w-4 h-4 rounded text-blue-600 flex-shrink-0">
+          <span class="w-16 font-bold truncate">Антифриз</span>
+          <input type="text" id="itemVal-antifreeze" list="list-antifreeze" placeholder="Марка / цвет" class="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none">
+          <input type="text" id="itemCost-antifreeze" placeholder="Цена" class="w-14 bg-slate-800 border border-slate-600 rounded px-1.5 py-1 text-xs font-mono text-white text-right outline-none flex-shrink-0">
           <datalist id="list-antifreeze"></datalist>
         </div>
 
         <!-- Тормозная жидкость -->
-        <div class="flex items-center gap-1.5">
-          <input type="checkbox" id="itemChk-brake_fluid" class="w-4 h-4 rounded text-blue-600">
-          <span class="text-xs font-bold text-white w-24 flex-shrink-0">Тормозная ж-ть</span>
-          <input type="text" id="itemVal-brake_fluid" list="list-brake_fluid" placeholder="ATE DOT 4 SL.6 1L" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs text-white outline-none">
-          <input type="text" id="itemCost-brake_fluid" placeholder="Цена" class="w-20 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs font-mono text-white outline-none text-right">
+        <div class="flex items-center gap-1 text-xs">
+          <input type="checkbox" id="itemChk-brake_fluid" class="w-4 h-4 rounded text-blue-600 flex-shrink-0">
+          <span class="w-16 font-bold truncate">Торм. ж-ть</span>
+          <input type="text" id="itemVal-brake_fluid" list="list-brake_fluid" placeholder="DOT4 / фирма" class="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none">
+          <input type="text" id="itemCost-brake_fluid" placeholder="Цена" class="w-14 bg-slate-800 border border-slate-600 rounded px-1.5 py-1 text-xs font-mono text-white text-right outline-none flex-shrink-0">
           <datalist id="list-brake_fluid"></datalist>
         </div>
       </div>
 
-      <!-- БЛОК 2: ТОРМОЗА, ГРМ И ПОМПА -->
-      <div id="section-brakes-items" class="space-y-2 bg-slate-800/60 p-3 rounded-2xl border border-slate-700/80 hidden">
-        <div class="text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1">Узлы тормозной системы и приводы:</div>
+      <!-- БЛОК ТОРМОЗА И ГРМ (Компактные строки) -->
+      <div id="section-brakes-items" class="space-y-1.5 bg-slate-800/60 p-2.5 rounded-xl border border-slate-700 hidden">
+        <div class="text-[10px] font-bold text-slate-400 uppercase mb-1">Узлы и цены:</div>
 
-        <div class="flex items-center gap-1.5">
-          <input type="checkbox" id="itemChk-brake_pads_front" class="w-4 h-4 rounded text-rose-500">
-          <span class="text-xs font-bold text-white w-28 flex-shrink-0">Передние колодки</span>
-          <input type="text" id="itemVal-brake_pads_front" list="list-brake_pads_front" placeholder="TRW GDB1844" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs text-white outline-none">
-          <input type="text" id="itemCost-brake_pads_front" placeholder="Цена" class="w-20 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs font-mono text-white outline-none text-right">
+        <div class="flex items-center gap-1 text-xs">
+          <input type="checkbox" id="itemChk-brake_pads_front" class="w-4 h-4 rounded text-rose-500 flex-shrink-0">
+          <span class="w-20 font-bold truncate">Пер. колодки</span>
+          <input type="text" id="itemVal-brake_pads_front" list="list-brake_pads_front" placeholder="Артикул" class="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none">
+          <input type="text" id="itemCost-brake_pads_front" placeholder="Цена" class="w-14 bg-slate-800 border border-slate-600 rounded px-1.5 py-1 text-xs font-mono text-white text-right outline-none flex-shrink-0">
           <datalist id="list-brake_pads_front"></datalist>
         </div>
 
-        <div class="flex items-center gap-1.5">
-          <input type="checkbox" id="itemChk-brake_pads_rear" class="w-4 h-4 rounded text-rose-500">
-          <span class="text-xs font-bold text-white w-28 flex-shrink-0">Задние колодки</span>
-          <input type="text" id="itemVal-brake_pads_rear" list="list-brake_pads_rear" placeholder="Brembo P 59 059" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs text-white outline-none">
-          <input type="text" id="itemCost-brake_pads_rear" placeholder="Цена" class="w-20 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs font-mono text-white outline-none text-right">
+        <div class="flex items-center gap-1 text-xs">
+          <input type="checkbox" id="itemChk-brake_pads_rear" class="w-4 h-4 rounded text-rose-500 flex-shrink-0">
+          <span class="w-20 font-bold truncate">Зад. колодки</span>
+          <input type="text" id="itemVal-brake_pads_rear" list="list-brake_pads_rear" placeholder="Артикул" class="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none">
+          <input type="text" id="itemCost-brake_pads_rear" placeholder="Цена" class="w-14 bg-slate-800 border border-slate-600 rounded px-1.5 py-1 text-xs font-mono text-white text-right outline-none flex-shrink-0">
           <datalist id="list-brake_pads_rear"></datalist>
         </div>
 
-        <div class="flex items-center gap-1.5">
-          <input type="checkbox" id="itemChk-brake_discs_front" class="w-4 h-4 rounded text-rose-500">
-          <span class="text-xs font-bold text-white w-28 flex-shrink-0">Передние диски</span>
-          <input type="text" id="itemVal-brake_discs_front" list="list-brake_discs_front" placeholder="Brembo 09.B352.11" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs text-white outline-none">
-          <input type="text" id="itemCost-brake_discs_front" placeholder="Цена" class="w-20 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs font-mono text-white outline-none text-right">
+        <div class="flex items-center gap-1 text-xs">
+          <input type="checkbox" id="itemChk-brake_discs_front" class="w-4 h-4 rounded text-rose-500 flex-shrink-0">
+          <span class="w-20 font-bold truncate">Пер. диски</span>
+          <input type="text" id="itemVal-brake_discs_front" list="list-brake_discs_front" placeholder="Артикул" class="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none">
+          <input type="text" id="itemCost-brake_discs_front" placeholder="Цена" class="w-14 bg-slate-800 border border-slate-600 rounded px-1.5 py-1 text-xs font-mono text-white text-right outline-none flex-shrink-0">
           <datalist id="list-brake_discs_front"></datalist>
         </div>
 
-        <div class="flex items-center gap-1.5">
-          <input type="checkbox" id="itemChk-brake_discs_rear" class="w-4 h-4 rounded text-rose-500">
-          <span class="text-xs font-bold text-white w-28 flex-shrink-0">Задние диски</span>
-          <input type="text" id="itemVal-brake_discs_rear" list="list-brake_discs_rear" placeholder="TRW DF6113" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs text-white outline-none">
-          <input type="text" id="itemCost-brake_discs_rear" placeholder="Цена" class="w-20 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs font-mono text-white outline-none text-right">
+        <div class="flex items-center gap-1 text-xs">
+          <input type="checkbox" id="itemChk-brake_discs_rear" class="w-4 h-4 rounded text-rose-500 flex-shrink-0">
+          <span class="w-20 font-bold truncate">Зад. диски</span>
+          <input type="text" id="itemVal-brake_discs_rear" list="list-brake_discs_rear" placeholder="Артикул" class="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none">
+          <input type="text" id="itemCost-brake_discs_rear" placeholder="Цена" class="w-14 bg-slate-800 border border-slate-600 rounded px-1.5 py-1 text-xs font-mono text-white text-right outline-none flex-shrink-0">
           <datalist id="list-brake_discs_rear"></datalist>
         </div>
 
-        <div class="flex items-center gap-1.5 pt-2 border-t border-slate-700/60">
-          <input type="checkbox" id="itemChk-timing_belt" class="w-4 h-4 rounded text-blue-500">
-          <span class="text-xs font-bold text-white w-28 flex-shrink-0">Ремень ГРМ</span>
-          <input type="text" id="itemVal-timing_belt" list="list-timing_belt" placeholder="Gates K015627XS" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs text-white outline-none">
-          <input type="text" id="itemCost-timing_belt" placeholder="Цена" class="w-20 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs font-mono text-white outline-none text-right">
+        <div class="flex items-center gap-1 text-xs pt-1 border-t border-slate-700">
+          <input type="checkbox" id="itemChk-timing_belt" class="w-4 h-4 rounded text-blue-500 flex-shrink-0">
+          <span class="w-20 font-bold truncate">Ремень ГРМ</span>
+          <input type="text" id="itemVal-timing_belt" list="list-timing_belt" placeholder="Комплект" class="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none">
+          <input type="text" id="itemCost-timing_belt" placeholder="Цена" class="w-14 bg-slate-800 border border-slate-600 rounded px-1.5 py-1 text-xs font-mono text-white text-right outline-none flex-shrink-0">
           <datalist id="list-timing_belt"></datalist>
         </div>
 
-        <div class="flex items-center gap-1.5">
-          <input type="checkbox" id="itemChk-water_pump" class="w-4 h-4 rounded text-blue-500">
-          <span class="text-xs font-bold text-white w-28 flex-shrink-0">Помпа (насос)</span>
-          <input type="text" id="itemVal-water_pump" list="list-water_pump" placeholder="SKF VKPC 85312" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs text-white outline-none">
-          <input type="text" id="itemCost-water_pump" placeholder="Цена" class="w-20 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs font-mono text-white outline-none text-right">
+        <div class="flex items-center gap-1 text-xs">
+          <input type="checkbox" id="itemChk-water_pump" class="w-4 h-4 rounded text-blue-500 flex-shrink-0">
+          <span class="w-20 font-bold truncate">Помпа (насос)</span>
+          <input type="text" id="itemVal-water_pump" list="list-water_pump" placeholder="Фирма / код" class="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none">
+          <input type="text" id="itemCost-water_pump" placeholder="Цена" class="w-14 bg-slate-800 border border-slate-600 rounded px-1.5 py-1 text-xs font-mono text-white text-right outline-none flex-shrink-0">
           <datalist id="list-water_pump"></datalist>
         </div>
       </div>
 
-      <!-- БЛОК 3: ДВИГАТЕЛЬ (ФОРСУНКИ, ПРОКЛАДКИ, СВЕЧИ) -->
-      <div id="section-engine-items" class="space-y-2 bg-slate-800/60 p-3 rounded-2xl border border-slate-700/80 hidden">
-        <div class="text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1">Узлы двигателя:</div>
+      <!-- БЛОК МОТОР (Компактные строки) -->
+      <div id="section-engine-items" class="space-y-1.5 bg-slate-800/60 p-2.5 rounded-xl border border-slate-700 hidden">
+        <div class="text-[10px] font-bold text-slate-400 uppercase mb-1">Двигатель:</div>
 
-        <div class="flex items-center gap-1.5">
-          <input type="checkbox" id="itemChk-injectors" class="w-4 h-4 rounded text-amber-500">
-          <span class="text-xs font-bold text-white w-28 flex-shrink-0">Форсунки</span>
-          <input type="text" id="itemVal-injectors" list="list-injectors" placeholder="Bosch 0445110327 или ремонт" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs text-white outline-none">
-          <input type="text" id="itemCost-injectors" placeholder="Цена" class="w-20 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs font-mono text-white outline-none text-right">
+        <div class="flex items-center gap-1 text-xs">
+          <input type="checkbox" id="itemChk-injectors" class="w-4 h-4 rounded text-amber-500 flex-shrink-0">
+          <span class="w-20 font-bold truncate">Форсунки</span>
+          <input type="text" id="itemVal-injectors" list="list-injectors" placeholder="Номер / ремонт" class="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none">
+          <input type="text" id="itemCost-injectors" placeholder="Цена" class="w-14 bg-slate-800 border border-slate-600 rounded px-1.5 py-1 text-xs font-mono text-white text-right outline-none flex-shrink-0">
           <datalist id="list-injectors"></datalist>
         </div>
 
-        <div class="flex items-center gap-1.5">
-          <input type="checkbox" id="itemChk-gasket" class="w-4 h-4 rounded text-amber-500">
-          <span class="text-xs font-bold text-white w-28 flex-shrink-0">Прокладка клап.</span>
-          <input type="text" id="itemVal-gasket" list="list-gasket" placeholder="Elring 476.710" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs text-white outline-none">
-          <input type="text" id="itemCost-gasket" placeholder="Цена" class="w-20 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs font-mono text-white outline-none text-right">
+        <div class="flex items-center gap-1 text-xs">
+          <input type="checkbox" id="itemChk-gasket" class="w-4 h-4 rounded text-amber-500 flex-shrink-0">
+          <span class="w-20 font-bold truncate">Прокладка</span>
+          <input type="text" id="itemVal-gasket" list="list-gasket" placeholder="Клапанной / др." class="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none">
+          <input type="text" id="itemCost-gasket" placeholder="Цена" class="w-14 bg-slate-800 border border-slate-600 rounded px-1.5 py-1 text-xs font-mono text-white text-right outline-none flex-shrink-0">
           <datalist id="list-gasket"></datalist>
         </div>
 
-        <div class="flex items-center gap-1.5">
-          <input type="checkbox" id="itemChk-spark_plugs" class="w-4 h-4 rounded text-amber-500">
-          <span class="text-xs font-bold text-white w-28 flex-shrink-0">Свечи накала</span>
-          <input type="text" id="itemVal-spark_plugs" list="list-spark_plugs" placeholder="Beru PSG006 с датчиком" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs text-white outline-none">
-          <input type="text" id="itemCost-spark_plugs" placeholder="Цена" class="w-20 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs font-mono text-white outline-none text-right">
+        <div class="flex items-center gap-1 text-xs">
+          <input type="checkbox" id="itemChk-spark_plugs" class="w-4 h-4 rounded text-amber-500 flex-shrink-0">
+          <span class="w-20 font-bold truncate">Свечи</span>
+          <input type="text" id="itemVal-spark_plugs" list="list-spark_plugs" placeholder="Накала / зажиг." class="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none">
+          <input type="text" id="itemCost-spark_plugs" placeholder="Цена" class="w-14 bg-slate-800 border border-slate-600 rounded px-1.5 py-1 text-xs font-mono text-white text-right outline-none flex-shrink-0">
           <datalist id="list-spark_plugs"></datalist>
         </div>
 
-        <div class="flex items-center gap-1.5">
-          <input type="checkbox" id="itemChk-thermostat" class="w-4 h-4 rounded text-amber-500">
-          <span class="text-xs font-bold text-white w-28 flex-shrink-0">Термостат</span>
-          <input type="text" id="itemVal-thermostat" list="list-thermostat" placeholder="Wahler / Mahle TI 10 88" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs text-white outline-none">
-          <input type="text" id="itemCost-thermostat" placeholder="Цена" class="w-20 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1.5 text-xs font-mono text-white outline-none text-right">
+        <div class="flex items-center gap-1 text-xs">
+          <input type="checkbox" id="itemChk-thermostat" class="w-4 h-4 rounded text-amber-500 flex-shrink-0">
+          <span class="w-20 font-bold truncate">Термостат</span>
+          <input type="text" id="itemVal-thermostat" list="list-thermostat" placeholder="Фирма / код" class="flex-1 min-w-0 bg-slate-800 border border-slate-600 rounded px-2 py-1 text-xs text-white outline-none">
+          <input type="text" id="itemCost-thermostat" placeholder="Цена" class="w-14 bg-slate-800 border border-slate-600 rounded px-1.5 py-1 text-xs font-mono text-white text-right outline-none flex-shrink-0">
           <datalist id="list-thermostat"></datalist>
         </div>
       </div>
 
-      <!-- БЛОК 4: ХОДОВАЯ ИЛИ ПРОИЗВОЛЬНЫЙ РЕМОНТ -->
-      <div id="section-custom-entry" class="space-y-2.5 hidden">
+      <!-- БЛОК ХОДОВАЯ / ДРУГОЕ -->
+      <div id="section-custom-entry" class="space-y-2 bg-slate-800/60 p-2.5 rounded-xl border border-slate-700 hidden">
         <div>
-          <label class="text-xs text-slate-300 font-bold">Что делалось по авто?</label>
-          <input id="entryCustomTitle" type="text" placeholder="Напр.: Замена рычагов подвески, сход-развал" class="w-full mt-1 px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-xl text-xs text-white font-semibold outline-none">
+          <label class="text-[10px] text-slate-400 font-bold">Название детали или работы:</label>
+          <input id="entryCustomTitle" type="text" placeholder="Напр.: Стойки стабилизатора, сайлентблоки" class="w-full mt-0.5 px-2.5 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-xs text-white font-semibold outline-none">
         </div>
         <div>
-          <label class="text-xs text-slate-300 font-bold">Стоимость работы и запчастей</label>
-          <input id="entryCustomCost" type="text" placeholder="350 PLN или 3200 грн" class="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-600 rounded-xl text-xs font-mono text-white font-bold outline-none">
+          <label class="text-[10px] text-slate-400 font-bold">Стоимость:</label>
+          <input id="entryCustomCost" type="text" placeholder="160 PLN" class="w-full mt-0.5 px-2.5 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-xs font-mono text-white outline-none">
         </div>
       </div>
 
       <!-- ПРОБЕГ -->
-      <div>
-        <label class="text-xs text-slate-300 font-bold">Текущий пробег при обслуживании (км)</label>
-        <input id="entryKm" type="number" class="w-full mt-1 px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-xl text-xs font-mono text-white font-bold outline-none">
+      <div class="flex items-center justify-between gap-2 pt-1 border-t border-slate-800">
+        <label class="text-xs font-bold text-slate-300">Пробег при замене (км):</label>
+        <input id="entryKm" type="number" class="w-32 px-2 py-1.5 bg-slate-800 border border-slate-600 rounded-lg text-xs font-mono text-white font-bold text-right outline-none">
       </div>
 
-      <button id="saveEntryBtn" class="w-full py-3.5 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white rounded-xl text-xs font-black uppercase tracking-wider transition shadow-lg mt-2">
+      <button id="saveEntryBtn" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white rounded-xl text-xs font-black uppercase tracking-wider transition shadow-lg">
         Сохранить запись
       </button>
     </div>
   </div>
 
   <!-- МОДАЛКА: ГАРАЖ -->
-  <div id="garageModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-end justify-center">
-    <div class="bg-slate-900 border-t-2 border-slate-700 rounded-t-3xl w-full max-w-lg p-5 space-y-4 max-h-[85vh] overflow-y-auto">
-      <div class="flex justify-between items-center pb-2 border-b border-slate-800">
-        <h3 class="text-sm font-black text-white">Гараж автомобилей</h3>
-        <button class="closeModalBtn text-slate-400 hover:text-white p-1"><i class="ph-bold ph-x text-xl"></i></button>
+  <div id="garageModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-end justify-center">
+    <div class="bg-slate-900 border-t-2 border-slate-700 rounded-t-2xl w-full max-w-lg p-4 space-y-3 max-h-[85vh] overflow-y-auto">
+      <div class="flex justify-between items-center pb-1 border-b border-slate-800">
+        <h3 class="text-xs font-black text-white uppercase">Гараж автомобилей</h3>
+        <button class="closeModalBtn text-slate-400 hover:text-white p-1"><i class="ph-bold ph-x text-lg"></i></button>
       </div>
 
-      <div id="carsList" class="space-y-2.5"></div>
+      <div id="carsList" class="space-y-2"></div>
 
-      <div class="pt-3 border-t border-slate-800 space-y-2.5">
-        <div class="text-xs font-black text-slate-200">Добавить авто:</div>
-        <div class="flex gap-2">
-          <input id="newCarVin" type="text" placeholder="VIN-код (17 знаков)" class="flex-1 uppercase font-mono bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-xs text-white font-bold outline-none focus:border-blue-500">
-          <button id="decodeVinBtn" class="bg-blue-600 hover:bg-blue-500 px-3 py-2 rounded-xl text-xs font-black text-white flex items-center gap-1 shadow-md">
-            <i class="ph-bold ph-sparkle"></i> <span>AI</span>
-          </button>
-        </div>
+      <div class="pt-2 border-t border-slate-800 space-y-2">
+        <div class="text-[11px] font-bold text-slate-300">Добавить автомобиль:</div>
+        <input id="newCarName" type="text" placeholder="Марка и модель (напр. Opel Astra J)" class="w-full bg-slate-800 border border-slate-600 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
         <div class="grid grid-cols-2 gap-2">
-          <input id="newCarName" type="text" placeholder="Марка и модель" class="bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-xs text-white font-bold outline-none">
-          <input id="newCarSub" type="text" placeholder="Двигатель / Год" class="bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-xs text-white font-bold outline-none">
+          <input id="newCarSub" type="text" placeholder="Мотор (1.7 CDTI)" class="bg-slate-800 border border-slate-600 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
+          <input id="newCarKm" type="number" placeholder="Пробег (км)" class="bg-slate-800 border border-slate-600 rounded-lg px-2.5 py-1.5 text-xs font-mono text-white outline-none">
         </div>
-        <input id="newCarKm" type="number" placeholder="Текущий пробег (км)" class="w-full bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-xs font-mono text-white font-bold outline-none">
-        <button id="addNewCarBtn" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white rounded-xl text-xs font-black uppercase tracking-wider transition shadow-lg">
+        <button id="addNewCarBtn" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white rounded-xl text-xs font-black uppercase tracking-wider transition">
           + Сохранить авто
         </button>
       </div>
@@ -416,65 +380,60 @@
   </div>
 
   <!-- МОДАЛКА: ИНТЕРВАЛЫ ТО -->
-  <div id="settingsModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-end justify-center">
-    <div class="bg-slate-900 border-t-2 border-slate-700 rounded-t-3xl w-full max-w-lg p-5 space-y-4 max-h-[85vh] overflow-y-auto">
-      <div class="flex justify-between items-center pb-2 border-b border-slate-800">
-        <h3 class="text-sm font-black text-white">Интервалы ТО и жидкостей (км)</h3>
-        <button class="closeModalBtn text-slate-400 hover:text-white p-1"><i class="ph-bold ph-x text-xl"></i></button>
+  <div id="settingsModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-end justify-center">
+    <div class="bg-slate-900 border-t-2 border-slate-700 rounded-t-2xl w-full max-w-lg p-4 space-y-3 max-h-[85vh] overflow-y-auto">
+      <div class="flex justify-between items-center pb-1 border-b border-slate-800">
+        <h3 class="text-xs font-black text-white uppercase">Интервалы ТО (км)</h3>
+        <button class="closeModalBtn text-slate-400 hover:text-white p-1"><i class="ph-bold ph-x text-lg"></i></button>
       </div>
-      <div class="grid grid-cols-2 gap-3 text-xs font-bold">
+      <div class="grid grid-cols-2 gap-2 text-xs font-bold">
         <div>
-          <label class="text-slate-300">Масло и фильтр</label>
-          <input id="int-oil" type="number" class="w-full mt-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 font-mono text-white">
+          <label class="text-slate-400 text-[10px]">Масло и фильтр</label>
+          <input id="int-oil" type="number" class="w-full mt-0.5 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1 font-mono text-white">
         </div>
         <div>
-          <label class="text-slate-300">Топливный фильтр</label>
-          <input id="int-fuel_filter" type="number" class="w-full mt-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 font-mono text-white">
+          <label class="text-slate-400 text-[10px]">Топливный фильтр</label>
+          <input id="int-fuel_filter" type="number" class="w-full mt-0.5 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1 font-mono text-white">
         </div>
         <div>
-          <label class="text-slate-300">Воздушный фильтр</label>
-          <input id="int-air_filter" type="number" class="w-full mt-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 font-mono text-white">
+          <label class="text-slate-400 text-[10px]">Воздушный фильтр</label>
+          <input id="int-air_filter" type="number" class="w-full mt-0.5 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1 font-mono text-white">
         </div>
         <div>
-          <label class="text-slate-300">Салонный фильтр</label>
-          <input id="int-cabin_filter" type="number" class="w-full mt-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 font-mono text-white">
+          <label class="text-slate-400 text-[10px]">Салонный фильтр</label>
+          <input id="int-cabin_filter" type="number" class="w-full mt-0.5 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1 font-mono text-white">
         </div>
         <div>
-          <label class="text-slate-300">Антифриз</label>
-          <input id="int-antifreeze" type="number" class="w-full mt-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 font-mono text-white">
+          <label class="text-slate-400 text-[10px]">Антифриз</label>
+          <input id="int-antifreeze" type="number" class="w-full mt-0.5 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1 font-mono text-white">
         </div>
         <div>
-          <label class="text-slate-300">Тормозная ж-ть</label>
-          <input id="int-brake_fluid" type="number" class="w-full mt-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 font-mono text-white">
+          <label class="text-slate-400 text-[10px]">Тормозная жидкость</label>
+          <input id="int-brake_fluid" type="number" class="w-full mt-0.5 bg-slate-800 border border-slate-600 rounded-lg px-2 py-1 font-mono text-white">
         </div>
       </div>
-      <button id="saveIntervalsBtn" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-black uppercase tracking-wider transition shadow-lg">
+      <button id="saveIntervalsBtn" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-black uppercase tracking-wider transition">
         Сохранить настройки
       </button>
     </div>
   </div>
 
   <script>
-    // ВСТАВЛЕН ТВОЙ AI STUDIO КЛЮЧ
-    const GEMINI_API_KEY = "AIzaSyA6eO3or8qsAPZ5K9t50YoHX-QSb73K39Q";
-
     const tg = window.Telegram?.WebApp;
     if (tg) {
       tg.ready();
       tg.expand();
     }
-    const userId = tg?.initDataUnsafe?.user?.id || 'demo_user';
-    const storageKey = `autolog_pro_v3_${userId}`;
+    const userId = tg?.initDataUnsafe?.user?.id || 'local_user';
+    const storageKey = `autolog_manual_${userId}`;
 
-    // Начальные данные
     const defaultState = {
       activeCarId: 'car_1',
       cars: [
         {
           id: 'car_1',
           name: 'Opel Astra J',
-          sub: '1.7 CDTI (130 hp)',
-          vin: '',
+          sub: '1.7 CDTI',
           currentKm: 218500,
           intervals: {
             oil: 10000,
@@ -518,24 +477,13 @@
             {
               id: 'rec_1',
               type: 'to',
-              title: 'ТО (Масло + фильтры)',
+              title: 'ТО (Регламентное)',
               km: 210000,
               items: [
-                { name: 'Масло Mobil Super 3000 XE 5W-30', cost: '180 PLN' },
-                { name: 'Фильтр масляный Mann HU 711/6 z', cost: '35 PLN' },
-                { name: 'Фильтр воздушный Mann C 26 106', cost: '45 PLN' },
-                { name: 'Фильтр салона Mann CUK 2442', cost: '50 PLN' }
-              ]
-            },
-            {
-              id: 'rec_0',
-              type: 'to',
-              title: 'ТО (Масло + все фильтры)',
-              km: 195000,
-              items: [
-                { name: 'Масло Mobil Super 3000 XE 5W-30', cost: '170 PLN' },
-                { name: 'Фильтр масляный Mann HU 711/6 z', cost: '32 PLN' },
-                { name: 'Фильтр топливный Mann PU 9001 x', cost: '75 PLN' }
+                { name: 'Масло: Mobil Super 3000 XE 5W-30', cost: '180 PLN' },
+                { name: 'Ф-р масла: Mann HU 711/6 z', cost: '35 PLN' },
+                { name: 'Воздушный: Mann C 26 106', cost: '45 PLN' },
+                { name: 'Салонный: Mann CUK 2442', cost: '50 PLN' }
               ]
             }
           ]
@@ -555,7 +503,6 @@
       return appData.cars.find(c => c.id === appData.activeCarId) || appData.cars[0];
     }
 
-    // Вкладки
     window.switchTab = (tabName) => {
       document.querySelectorAll('.tab-page').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -569,15 +516,14 @@
       activeBtn.classList.add('text-blue-400');
     };
 
-    // Переключение разделов в модалке
     let activeAddCategory = 'to';
     window.setEntryCategory = (cat) => {
       activeAddCategory = cat;
       document.querySelectorAll('.cat-sel-btn').forEach(b => {
-        b.className = 'cat-sel-btn py-2 text-[11px] font-black rounded-xl border border-slate-700 bg-slate-800 text-slate-300';
+        b.className = 'cat-sel-btn py-1.5 text-[10px] font-black rounded-lg border border-slate-700 bg-slate-800 text-slate-300';
       });
       const active = document.getElementById(`catBtn-${cat}`);
-      active.className = 'cat-sel-btn py-2 text-[11px] font-black rounded-xl border border-blue-500 bg-blue-600 text-white';
+      active.className = 'cat-sel-btn py-1.5 text-[10px] font-black rounded-lg border border-blue-500 bg-blue-600 text-white';
 
       document.getElementById('section-to-items').classList.add('hidden');
       document.getElementById('section-brakes-items').classList.add('hidden');
@@ -590,7 +536,6 @@
       else document.getElementById('section-custom-entry').classList.remove('hidden');
     };
 
-    // Обновление автоподсказок из памяти машины
     function refreshDataLists(car) {
       if (!car || !car.historyParts) return;
       for (const [key, list] of Object.entries(car.historyParts)) {
@@ -605,45 +550,43 @@
       }
     }
 
-    // Отрисовка приложения
     function render() {
       const car = getCar();
       if (!car) {
         document.getElementById('hdrCarName').innerText = 'Гараж пуст';
-        document.getElementById('hdrCarSub').innerText = 'Нажмите, чтобы добавить авто';
+        document.getElementById('hdrCarSub').innerText = 'Нажмите для добавления авто';
         document.getElementById('hdrKmDisplay').innerText = '0 км';
         return;
       }
 
       document.getElementById('hdrCarName').innerText = car.name;
-      document.getElementById('hdrCarSub').innerText = car.sub || car.vin || 'Автомобиль выбран';
+      document.getElementById('hdrCarSub').innerText = car.sub || 'Авто выбрано';
       document.getElementById('hdrKmDisplay').innerText = `${car.currentKm.toLocaleString()} км`;
-      document.getElementById('aiVinHint').innerText = car.vin ? `VIN: ${car.vin}` : 'VIN: не указан';
       document.getElementById('entryKm').value = car.currentKm;
 
       refreshDataLists(car);
 
-      // 1. Масло
+      // Масло
       const oilPassed = car.currentKm - (car.lastReplacedKm.oil || 0);
       const oilLeft = car.intervals.oil - oilPassed;
       const oilPct = Math.min(100, Math.max(0, (oilPassed / car.intervals.oil) * 100));
-      const oilBadge = oilLeft > 0 ? `<span class="text-[10px] bg-emerald-500/20 text-emerald-400 font-bold px-2 py-0.5 rounded-md border border-emerald-500/30 font-mono">OK</span>` : `<span class="text-[10px] bg-rose-500/20 text-rose-400 font-bold px-2 py-0.5 rounded-md border border-rose-500/30 font-mono">ЗАМЕНА</span>`;
+      const oilBadge = oilLeft > 0 ? `<span class="text-[10px] bg-emerald-500/20 text-emerald-400 font-bold px-2 py-0.5 rounded border border-emerald-500/30 font-mono">OK</span>` : `<span class="text-[10px] bg-rose-500/20 text-rose-400 font-bold px-2 py-0.5 rounded border border-rose-500/30 font-mono">ЗАМЕНА</span>`;
 
       document.getElementById('card-oil').innerHTML = `
         <div class="flex justify-between items-center text-xs font-black text-white">
-          <span class="flex items-center gap-1.5"><i class="ph-bold ph-drop text-amber-400 text-sm"></i> Моторное масло и фильтр</span>
+          <span class="flex items-center gap-1"><i class="ph-bold ph-drop text-amber-400"></i> Моторное масло и фильтр</span>
           ${oilBadge}
         </div>
-        <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
+        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
           <div class="h-full ${oilLeft < 1000 ? 'bg-rose-500' : 'bg-blue-500'} rounded-full transition-all" style="width: ${oilPct}%"></div>
         </div>
-        <div class="flex justify-between text-xs text-slate-300 font-mono font-bold">
+        <div class="flex justify-between text-[11px] text-slate-300 font-mono font-bold">
           <span>Осталось: <span class="${oilLeft <= 0 ? 'text-rose-400' : 'text-white'}">${oilLeft > 0 ? oilLeft.toLocaleString() + ' км' : 'Перепробег ' + Math.abs(oilLeft) + ' км'}</span></span>
           <span class="text-slate-400">до ${(car.lastReplacedKm.oil + car.intervals.oil).toLocaleString()} км</span>
         </div>
       `;
 
-      // Плитки жидкостей и фильтров
+      // Плитки ТО
       const renderTile = (id, title, key, warn = 2000) => {
         const passed = car.currentKm - (car.lastReplacedKm[key] || 0);
         const int = car.intervals[key] || 15000;
@@ -652,11 +595,11 @@
         const col = left <= 0 ? 'bg-rose-500' : left < warn ? 'bg-amber-400' : 'bg-emerald-400';
 
         document.getElementById(id).innerHTML = `
-          <div class="text-xs text-white font-black">${title}</div>
-          <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
+          <div class="text-[11px] text-white font-black truncate">${title}</div>
+          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
             <div class="h-full ${col} rounded-full" style="width: ${pct}%"></div>
           </div>
-          <div class="text-[11px] font-mono font-bold text-slate-300">Ост: <span class="${left <= 0 ? 'text-rose-400' : 'text-white'}">${left > 0 ? left.toLocaleString() : '0'} км</span></div>
+          <div class="text-[10px] font-mono font-bold text-slate-300">Ост: <span class="${left <= 0 ? 'text-rose-400' : 'text-white'}">${left > 0 ? left.toLocaleString() : '0'} км</span></div>
         `;
       };
 
@@ -667,87 +610,87 @@
       renderTile('card-brake_fluid', 'Тормозная ж-ть', 'brake_fluid', 4000);
       renderTile('card-spark_plugs', 'Свечи накала', 'spark_plugs', 5000);
 
-      // Фактический пробег узлов
+      // Узлы
       const renderNodeFact = (id, title, key, icon = 'ph-disc') => {
         const replaced = car.lastReplacedKm[key] || 0;
         const delta = car.currentKm - replaced;
         document.getElementById(id).innerHTML = `
-          <div class="text-xs font-black text-white flex items-center gap-1">
-            <i class="ph-bold ${icon} text-slate-400"></i> ${title}
+          <div class="text-[11px] font-black text-white flex items-center gap-1">
+            <i class="ph-bold ${icon} text-slate-400 text-xs"></i> ${title}
           </div>
-          <div class="text-xs font-mono font-bold text-blue-400 mt-1">${replaced.toLocaleString()} км</div>
+          <div class="text-xs font-mono font-bold text-blue-400 mt-0.5">${replaced.toLocaleString()} км</div>
           <div class="text-[10px] text-slate-400 font-mono">Проехали: <span class="text-white font-bold">${delta.toLocaleString()} км</span></div>
         `;
       };
 
-      renderNodeFact('node-brake_pads_front', 'Колодки передние', 'brake_pads_front');
-      renderNodeFact('node-brake_pads_rear', 'Колодки задние', 'brake_pads_rear');
-      renderNodeFact('node-brake_discs_front', 'Диски передние', 'brake_discs_front');
-      renderNodeFact('node-brake_discs_rear', 'Диски задние', 'brake_discs_rear');
+      renderNodeFact('node-brake_pads_front', 'Пер. колодки', 'brake_pads_front');
+      renderNodeFact('node-brake_pads_rear', 'Зад. колодки', 'brake_pads_rear');
+      renderNodeFact('node-brake_discs_front', 'Пер. диски', 'brake_discs_front');
+      renderNodeFact('node-brake_discs_rear', 'Зад. диски', 'brake_discs_rear');
       renderNodeFact('node-timing_belt', 'Ремень ГРМ', 'timing_belt', 'ph-arrows-clockwise');
       renderNodeFact('node-water_pump', 'Помпа (насос)', 'water_pump', 'ph-drop');
 
-      // Мотор и ходовая (Вкладка 3)
+      // Мотор и подвеска
       const engList = document.getElementById('engineSuspList');
       const nonToRecords = (car.records || []).filter(r => r.type !== 'to');
       if (nonToRecords.length === 0) {
-        engList.innerHTML = `<div class="text-xs text-slate-400 p-4 bg-slate-900 border border-slate-800 rounded-xl text-center font-medium">Записей по мотору и ходовой пока нет</div>`;
+        engList.innerHTML = `<div class="text-xs text-slate-400 p-3 bg-slate-900 border border-slate-800 rounded-xl text-center">Записей по мотору и ходовой пока нет</div>`;
       } else {
         engList.innerHTML = nonToRecords.map(r => `
-          <div class="bg-slate-900 border border-slate-700 rounded-xl p-3 flex justify-between items-center">
+          <div class="bg-slate-900 border border-slate-700 rounded-xl p-2.5 flex justify-between items-center">
             <div>
               <div class="text-xs font-black text-white">${r.title}</div>
-              <div class="text-[11px] text-slate-400 font-mono font-bold">${r.km.toLocaleString()} км</div>
+              <div class="text-[10px] text-slate-400 font-mono font-bold">${r.km.toLocaleString()} км</div>
             </div>
             <div class="text-xs font-mono font-black text-amber-400">${r.items?.[0]?.cost || ''}</div>
           </div>
         `).join('');
       }
 
-      // Аналитика расходов и ТО (Вкладка 4)
+      // Последнее и предпоследнее ТО
       const toRecords = (car.records || []).filter(r => r.type === 'to');
       const lastTo = toRecords[0];
       const prevTo = toRecords[1];
 
       document.getElementById('lastToCard').innerHTML = lastTo ? `
-        <div class="font-black text-blue-400 flex items-center justify-between">
+        <div class="font-black text-blue-400 flex items-center justify-between text-[11px]">
           <span>Последнее ТО</span>
           <span class="font-mono text-[10px]">${lastTo.km.toLocaleString()} км</span>
         </div>
-        <div class="space-y-1 pt-1 border-t border-slate-800">
-          ${lastTo.items.map(i => `<div class="flex justify-between text-[10px] text-slate-300"><span>${i.name}</span><span class="font-bold text-amber-400">${i.cost || ''}</span></div>`).join('')}
+        <div class="space-y-0.5 pt-1 border-t border-slate-800">
+          ${lastTo.items.map(i => `<div class="flex justify-between text-[10px] text-slate-300"><span class="truncate pr-1">${i.name}</span><span class="font-bold text-amber-400 flex-shrink-0">${i.cost || ''}</span></div>`).join('')}
         </div>
-      ` : `<div class="text-slate-500 py-3 text-center text-[11px]">Нет записей последнего ТО</div>`;
+      ` : `<div class="text-slate-500 py-2 text-center text-[10px]">Нет записей</div>`;
 
       document.getElementById('prevToCard').innerHTML = prevTo ? `
-        <div class="font-black text-slate-400 flex items-center justify-between">
-          <span>Предпоследнее ТО</span>
+        <div class="font-black text-slate-400 flex items-center justify-between text-[11px]">
+          <span>Предп. ТО</span>
           <span class="font-mono text-[10px]">${prevTo.km.toLocaleString()} км</span>
         </div>
-        <div class="space-y-1 pt-1 border-t border-slate-800">
-          ${prevTo.items.map(i => `<div class="flex justify-between text-[10px] text-slate-300"><span>${i.name}</span><span class="font-bold text-amber-400">${i.cost || ''}</span></div>`).join('')}
+        <div class="space-y-0.5 pt-1 border-t border-slate-800">
+          ${prevTo.items.map(i => `<div class="flex justify-between text-[10px] text-slate-300"><span class="truncate pr-1">${i.name}</span><span class="font-bold text-amber-400 flex-shrink-0">${i.cost || ''}</span></div>`).join('')}
         </div>
-      ` : `<div class="text-slate-500 py-3 text-center text-[11px]">Нет записей предп. ТО</div>`;
+      ` : `<div class="text-slate-500 py-2 text-center text-[10px]">Нет записей</div>`;
 
-      // Подсчет общей суммы затрат
-      let totalCostPLN = 0;
+      // Общая сумма
+      let totalCost = 0;
       (car.records || []).forEach(r => {
         (r.items || []).forEach(it => {
           if (it.cost) {
             const num = parseInt(it.cost.replace(/\D/g, ''), 10);
-            if (!isNaN(num)) totalCostPLN += num;
+            if (!isNaN(num)) totalCost += num;
           }
         });
       });
-      document.getElementById('totalCostDisplay').innerText = `${totalCostPLN.toLocaleString()} PLN / эквивалент`;
+      document.getElementById('totalCostDisplay').innerText = `${totalCost.toLocaleString()} PLN`;
 
-      // Лента всех записей
+      // Лента всех расходов
       const histList = document.getElementById('fullHistoryList');
       if (!car.records || car.records.length === 0) {
-        histList.innerHTML = `<div class="text-xs text-slate-400 p-4 bg-slate-900 border border-slate-800 rounded-xl text-center font-medium">История пуста</div>`;
+        histList.innerHTML = `<div class="text-xs text-slate-400 p-3 bg-slate-900 border border-slate-800 rounded-xl text-center">История пуста</div>`;
       } else {
         histList.innerHTML = car.records.map(r => `
-          <div class="bg-slate-900 border border-slate-700 rounded-xl p-3.5 space-y-2">
+          <div class="bg-slate-900 border border-slate-700 rounded-xl p-2.5 space-y-1.5">
             <div class="flex justify-between items-center">
               <span class="text-xs font-black text-white flex items-center gap-1.5">
                 <span class="w-2 h-2 rounded-full ${r.type === 'to' ? 'bg-amber-400' : 'bg-blue-400'}"></span>
@@ -755,7 +698,7 @@
               </span>
               <span class="text-xs font-mono font-bold text-slate-400">${r.km.toLocaleString()} км</span>
             </div>
-            <div class="space-y-1 pt-1 border-t border-slate-800/80">
+            <div class="space-y-1 pt-1 border-t border-slate-800">
               ${(r.items || []).map(it => `
                 <div class="flex justify-between text-xs text-slate-300">
                   <span class="truncate pr-2">${it.name}</span>
@@ -768,7 +711,7 @@
       }
     }
 
-    // Модальные окна
+    // Модалки
     const addModal = document.getElementById('addModal');
     const garageModal = document.getElementById('garageModal');
     const settingsModal = document.getElementById('settingsModal');
@@ -788,7 +731,7 @@
     document.getElementById('updateKmBtn').onclick = () => {
       const car = getCar();
       if (!car) return;
-      const val = prompt('Введите текущие показания одометра (км):', car.currentKm);
+      const val = prompt('Введите показания одометра (км):', car.currentKm);
       if (val && !isNaN(val)) {
         car.currentKm = parseInt(val, 10);
         saveState();
@@ -803,7 +746,7 @@
       car.historyParts[key] = [val, ...car.historyParts[key].filter(x => x !== val)].slice(0, 10);
     }
 
-    // СОХРАНЕНИЕ ЗАПИСИ
+    // СОХРАНЕНИЕ
     document.getElementById('saveEntryBtn').onclick = () => {
       const car = getCar();
       if (!car) return alert('Сначала добавьте автомобиль');
@@ -816,18 +759,27 @@
       let recType = activeAddCategory;
 
       if (activeAddCategory === 'to') {
-        const toKeys = ['oil', 'oil_filter', 'fuel_filter', 'air_filter', 'cabin_filter', 'antifreeze', 'brake_fluid'];
-        toKeys.forEach(k => {
+        const toKeys = [
+          { k: 'oil', label: 'Масло' },
+          { k: 'oil_filter', label: 'Ф-р масла' },
+          { k: 'fuel_filter', label: 'Топливный' },
+          { k: 'air_filter', label: 'Воздушный' },
+          { k: 'cabin_filter', label: 'Салонный' },
+          { k: 'antifreeze', label: 'Антифриз' },
+          { k: 'brake_fluid', label: 'Торм. ж-ть' }
+        ];
+
+        toKeys.forEach(({ k, label }) => {
           const chk = document.getElementById(`itemChk-${k}`);
           const val = document.getElementById(`itemVal-${k}`);
           const cost = document.getElementById(`itemCost-${k}`);
           if (chk && chk.checked) {
-            const part = (val ? val.value.trim() : '') || k;
+            const part = (val ? val.value.trim() : '') || label;
             const c = cost ? cost.value.trim() : '';
             if (k === 'oil' || k === 'oil_filter') car.lastReplacedKm.oil = km;
             else car.lastReplacedKm[k] = km;
             rememberPart(car, k, part);
-            items.push({ name: part, cost: c });
+            items.push({ name: `${label}: ${part}`, cost: c });
             chk.checked = false;
             if (val) val.value = '';
             if (cost) cost.value = '';
@@ -836,17 +788,25 @@
         if (items.length === 0) return alert('Отметьте хотя бы один пункт ТО');
         mainTitle = 'ТО (Регламентное)';
       } else if (activeAddCategory === 'brakes') {
-        const brkKeys = ['brake_pads_front', 'brake_pads_rear', 'brake_discs_front', 'brake_discs_rear', 'timing_belt', 'water_pump'];
-        brkKeys.forEach(k => {
+        const brkKeys = [
+          { k: 'brake_pads_front', label: 'Пер. колодки' },
+          { k: 'brake_pads_rear', label: 'Зад. колодки' },
+          { k: 'brake_discs_front', label: 'Пер. диски' },
+          { k: 'brake_discs_rear', label: 'Зад. диски' },
+          { k: 'timing_belt', label: 'Ремень ГРМ' },
+          { k: 'water_pump', label: 'Помпа' }
+        ];
+
+        brkKeys.forEach(({ k, label }) => {
           const chk = document.getElementById(`itemChk-${k}`);
           const val = document.getElementById(`itemVal-${k}`);
           const cost = document.getElementById(`itemCost-${k}`);
           if (chk && chk.checked) {
-            const part = (val ? val.value.trim() : '') || k;
+            const part = (val ? val.value.trim() : '') || label;
             const c = cost ? cost.value.trim() : '';
             car.lastReplacedKm[k] = km;
             rememberPart(car, k, part);
-            items.push({ name: part, cost: c });
+            items.push({ name: `${label}: ${part}`, cost: c });
             chk.checked = false;
             if (val) val.value = '';
             if (cost) cost.value = '';
@@ -855,28 +815,34 @@
         if (items.length === 0) return alert('Отметьте хотя бы один узел');
         mainTitle = 'Тормоза / Приводы';
       } else if (activeAddCategory === 'engine') {
-        const engKeys = ['injectors', 'gasket', 'spark_plugs', 'thermostat'];
-        engKeys.forEach(k => {
+        const engKeys = [
+          { k: 'injectors', label: 'Форсунки' },
+          { k: 'gasket', label: 'Прокладка' },
+          { k: 'spark_plugs', label: 'Свечи' },
+          { k: 'thermostat', label: 'Термостат' }
+        ];
+
+        engKeys.forEach(({ k, label }) => {
           const chk = document.getElementById(`itemChk-${k}`);
           const val = document.getElementById(`itemVal-${k}`);
           const cost = document.getElementById(`itemCost-${k}`);
           if (chk && chk.checked) {
-            const part = (val ? val.value.trim() : '') || k;
+            const part = (val ? val.value.trim() : '') || label;
             const c = cost ? cost.value.trim() : '';
             if (k === 'spark_plugs') car.lastReplacedKm.spark_plugs = km;
             rememberPart(car, k, part);
-            items.push({ name: part, cost: c });
+            items.push({ name: `${label}: ${part}`, cost: c });
             chk.checked = false;
             if (val) val.value = '';
             if (cost) cost.value = '';
           }
         });
-        if (items.length === 0) return alert('Отметьте хотя бы один пункт по мотору');
+        if (items.length === 0) return alert('Отметьте пункт по мотору');
         mainTitle = 'Ремонт двигателя';
       } else {
         const title = document.getElementById('entryCustomTitle').value.trim();
         const cost = document.getElementById('entryCustomCost').value.trim();
-        if (!title) return alert('Укажите название работы или детали');
+        if (!title) return alert('Укажите название работы');
         items.push({ name: title, cost });
         mainTitle = title;
         document.getElementById('entryCustomTitle').value = '';
@@ -900,17 +866,17 @@
     function renderGarage() {
       const list = document.getElementById('carsList');
       if (!appData.cars || appData.cars.length === 0) {
-        list.innerHTML = `<div class="text-xs text-slate-400 text-center py-2">В гараже пока нет машин</div>`;
+        list.innerHTML = `<div class="text-xs text-slate-400 text-center py-2">В гараже пусто</div>`;
         return;
       }
       list.innerHTML = appData.cars.map(c => `
-        <div class="flex items-center justify-between p-3 rounded-xl border ${c.id === appData.activeCarId ? 'border-blue-500 bg-blue-950/40' : 'border-slate-700 bg-slate-800/80'}">
+        <div class="flex items-center justify-between p-2.5 rounded-xl border ${c.id === appData.activeCarId ? 'border-blue-500 bg-blue-950/40' : 'border-slate-700 bg-slate-800/80'}">
           <button onclick="selectCar('${c.id}')" class="text-left flex-1 min-w-0 pr-2">
             <div class="text-xs font-black text-white truncate">${c.name}</div>
-            <div class="text-[11px] text-slate-300 font-mono truncate font-semibold">${c.sub || ''} | ${c.vin || 'без VIN'}</div>
+            <div class="text-[10px] text-slate-300 truncate">${c.sub || ''}</div>
           </button>
-          <button onclick="deleteCar('${c.id}')" class="text-rose-400 hover:text-white bg-rose-500/20 hover:bg-rose-600 border border-rose-500/40 p-2 rounded-lg flex-shrink-0 transition">
-            <i class="ph-bold ph-trash text-base"></i>
+          <button onclick="deleteCar('${c.id}')" class="text-rose-400 hover:text-white bg-rose-500/20 hover:bg-rose-600 border border-rose-500/40 p-1.5 rounded-lg flex-shrink-0 transition">
+            <i class="ph-bold ph-trash text-sm"></i>
           </button>
         </div>
       `).join('');
@@ -923,7 +889,7 @@
     };
 
     window.deleteCar = (id) => {
-      if (!confirm('Вы точно хотите удалить этот автомобиль?')) return;
+      if (!confirm('Удалить этот автомобиль?')) return;
       appData.cars = appData.cars.filter(c => c.id !== id);
       appData.activeCarId = appData.cars.length > 0 ? appData.cars[0].id : null;
       saveState();
@@ -933,7 +899,6 @@
     document.getElementById('addNewCarBtn').onclick = () => {
       const name = document.getElementById('newCarName').value.trim();
       const sub = document.getElementById('newCarSub').value.trim();
-      const vin = document.getElementById('newCarVin').value.trim().toUpperCase();
       const km = parseInt(document.getElementById('newCarKm').value, 10) || 0;
 
       if (!name) return alert('Укажите марку и модель авто');
@@ -942,7 +907,6 @@
         id: 'car_' + Date.now(),
         name,
         sub,
-        vin,
         currentKm: km,
         intervals: { oil: 10000, fuel_filter: 30000, air_filter: 15000, cabin_filter: 15000, antifreeze: 60000, brake_fluid: 45000, spark_plugs: 60000 },
         lastReplacedKm: {
@@ -960,7 +924,6 @@
       garageModal.classList.add('hidden');
     };
 
-    // Настройки
     function renderSettings() {
       const car = getCar();
       if (!car) return;
@@ -979,165 +942,6 @@
       });
       saveState();
       settingsModal.classList.add('hidden');
-    };
-
-    // ==========================================
-    // ПРЯМОЙ ВЫЗОВ GEMINI API
-    // ==========================================
-
-    async function callGemini(contents) {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents })
-      });
-      if (!response.ok) {
-        const err = await response.text();
-        throw new Error(`Ошибка API: ${err}`);
-      }
-      const data = await response.json();
-      return data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
-    }
-
-    function compressImage(file, maxWidth = 1024, quality = 0.75) {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            let width = img.width;
-            let height = img.height;
-            if (width > maxWidth) {
-              height = Math.round((height * maxWidth) / width);
-              width = maxWidth;
-            }
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-            const dataUrl = canvas.toDataURL('image/jpeg', quality);
-            resolve(dataUrl.split(',')[1]);
-          };
-          img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-
-    // 1. VIN Decoder
-    document.getElementById('decodeVinBtn').onclick = async () => {
-      const vin = document.getElementById('newCarVin').value.trim().toUpperCase();
-      if (!vin || vin.length < 11) return alert('Введите корректный VIN-код');
-
-      const btn = document.getElementById('decodeVinBtn');
-      btn.innerHTML = `<i class="ph-bold ph-spinner animate-spin"></i>`;
-
-      try {
-        const text = await callGemini([{
-          parts: [{ text: `Расшифруй VIN: "${vin}". Ответь строго в формате JSON без markdown: {"brand_model": "Марка и модель", "engine_year": "Объем, мощность, тип мотора, год"}` }]
-        }]);
-        const clean = text.replace(/```json/g, '').replace(/```/g, '').trim();
-        const res = JSON.parse(clean);
-        if (res.brand_model) document.getElementById('newCarName').value = res.brand_model;
-        if (res.engine_year) document.getElementById('newCarSub').value = res.engine_year;
-      } catch (err) {
-        alert('Ошибка при расшифровке VIN: ' + err.message);
-      } finally {
-        btn.innerHTML = `<i class="ph-bold ph-sparkle"></i> <span>AI</span>`;
-      }
-    };
-
-    // 2. Распознавание фото детали или чека
-    document.getElementById('aiPhotoInput').onchange = async (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const status = document.getElementById('photoStatusText');
-      status.innerText = 'Анализирую фото через Gemini...';
-
-      try {
-        const base64Data = await compressImage(file);
-        const prompt = `На фотографии деталь авто, коробка или чек.
-Определи:
-1. Бренд и артикул детали, либо название масла.
-2. К какой категории относится: oil, oil_filter, fuel_filter, air_filter, cabin_filter, antifreeze, brake_fluid, brake_pads_front, brake_discs_front, timing_belt, water_pump, injectors, gasket, spark_plugs или other.
-3. Стоимость (если есть на чеке). Валюта только PLN или грн.
-
-Ответь строго валидным JSON без кавычек markdown:
-{
-  "item_key": "oil|oil_filter|fuel_filter|air_filter|cabin_filter|antifreeze|brake_fluid|brake_pads_front|brake_discs_front|timing_belt|water_pump|injectors|gasket|spark_plugs|other",
-  "part_name": "Бренд и точный артикул",
-  "cost": "Цена и валюта или пусто"
-}`;
-
-        const text = await callGemini([{
-          parts: [
-            { text: prompt },
-            { inline_data: { mime_type: "image/jpeg", data: base64Data } }
-          ]
-        }]);
-
-        const clean = text.replace(/```json/g, '').replace(/```/g, '').trim();
-        const info = JSON.parse(clean);
-
-        if (info.item_key && (info.item_key.startsWith('brake') || info.item_key === 'timing_belt' || info.item_key === 'water_pump')) {
-          setEntryCategory('brakes');
-          const chk = document.getElementById(`itemChk-${info.item_key}`);
-          const val = document.getElementById(`itemVal-${info.item_key}`);
-          const cost = document.getElementById(`itemCost-${info.item_key}`);
-          if (chk) chk.checked = true;
-          if (val && info.part_name) val.value = info.part_name;
-          if (cost && info.cost) cost.value = info.cost;
-        } else if (info.item_key === 'injectors' || info.item_key === 'gasket' || info.item_key === 'spark_plugs' || info.item_key === 'thermostat') {
-          setEntryCategory('engine');
-          const chk = document.getElementById(`itemChk-${info.item_key}`);
-          const val = document.getElementById(`itemVal-${info.item_key}`);
-          const cost = document.getElementById(`itemCost-${info.item_key}`);
-          if (chk) chk.checked = true;
-          if (val && info.part_name) val.value = info.part_name;
-          if (cost && info.cost) cost.value = info.cost;
-        } else if (info.item_key === 'other') {
-          setEntryCategory('suspension');
-          if (info.part_name) document.getElementById('entryCustomTitle').value = info.part_name;
-          if (info.cost) document.getElementById('entryCustomCost').value = info.cost;
-        } else {
-          setEntryCategory('to');
-          const target = info.item_key || 'oil';
-          const chk = document.getElementById(`itemChk-${target}`);
-          const val = document.getElementById(`itemVal-${target}`);
-          const cost = document.getElementById(`itemCost-${target}`);
-          if (chk) chk.checked = true;
-          if (val && info.part_name) val.value = info.part_name;
-          if (cost && info.cost) cost.value = info.cost;
-        }
-
-        status.innerText = 'Деталь успешно распознана!';
-      } catch (err) {
-        status.innerText = 'Ошибка разбора фото.';
-        alert('Ошибка AI: ' + err.message);
-      }
-    };
-
-    // 3. Каталог подбора деталей
-    document.getElementById('aiFindPartBtn').onclick = async () => {
-      const q = document.getElementById('aiPartQuery').value.trim();
-      const car = getCar();
-      if (!q) return;
-
-      const resBox = document.getElementById('aiPartResult');
-      resBox.classList.remove('hidden');
-      resBox.innerText = 'Поиск артикулов по каталогам...';
-
-      try {
-        const text = await callGemini([{
-          parts: [{ text: `Автомобиль: ${car ? car.name + ' ' + car.sub : 'Не указан'}, VIN: ${car ? car.vin : 'Не указан'}. Запрос: "${q}". Подбери OEM-номер и 2-3 проверенных кросс-номера (Mann, Bosch, TRW, SKF, Elring, Gates). Если указываешь цены, только в PLN или грн. Выдай четкий список с артикулами.` }]
-        }]);
-        resBox.innerText = text || 'Ничего не найдено';
-      } catch (e) {
-        resBox.innerText = 'Ошибка связи с каталогом: ' + e.message;
-      }
     };
 
     render();
