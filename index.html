@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AutoLog</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    body {
+      background-color: var(--tg-theme-bg-color, #0f172a);
+      color: var(--tg-theme-text-color, #f8fafc);
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24 select-none">
+
+  <!-- ВЕРХНИЙ БАР: АВТО И ПРОБЕГ -->
+  <header class="sticky top-0 z-30 bg-slate-900/90 backdrop-blur border-b border-slate-800 px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <i class="ph ph-car text-blue-500 text-xl"></i>
+      <div>
+        <div class="text-xs font-bold leading-tight">Opel Astra J</div>
+        <div class="text-[10px] text-slate-400 font-mono">1.7 CDTI</div>
+      </div>
+    </div>
+    <div class="bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-700 text-right">
+      <div class="text-[10px] text-slate-400">Пробег</div>
+      <div class="text-xs font-bold font-mono text-slate-200">218 500 км</div>
+    </div>
+  </header>
+
+  <!-- КОНТЕНТ: КАРТОЧКИ ТО -->
+  <main class="p-4 space-y-4 max-w-md mx-auto">
+    
+    <!-- РЕГУЛЯРНОЕ ТО -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+      <div class="flex justify-between items-center text-xs font-bold text-slate-300">
+        <span class="flex items-center gap-1.5"><i class="ph ph-drop text-amber-400"></i> Моторное масло</span>
+        <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-mono">OK</span>
+      </div>
+      <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+        <div class="h-full bg-blue-500 rounded-full" style="width: 85%"></div>
+      </div>
+      <div class="flex justify-between text-[11px] text-slate-400 font-mono">
+        <span>Осталось: ~1 500 км</span>
+        <span>до 220 000 км</span>
+      </div>
+    </div>
+
+    <!-- ФИЛЬТРЫ -->
+    <div class="grid grid-cols-2 gap-2">
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-1.5">
+        <div class="text-xs text-slate-300 font-medium">Топливный фильтр</div>
+        <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+          <div class="h-full bg-amber-500 rounded-full" style="width: 75%"></div>
+        </div>
+        <div class="text-[10px] text-slate-400 font-mono">Ост: 6 500 км</div>
+      </div>
+
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-1.5">
+        <div class="text-xs text-slate-300 font-medium">Воздушный фильтр</div>
+        <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+          <div class="h-full bg-emerald-500 rounded-full" style="width: 40%"></div>
+        </div>
+        <div class="text-[10px] text-slate-400 font-mono">Ост: 6 000 км</div>
+      </div>
+    </div>
+
+    <!-- ТОРМОЗА И РЕМНИ -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+      <div class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+        <i class="ph ph-disc text-rose-400"></i> Тормоза и ГРМ
+      </div>
+      <div class="space-y-2">
+        <div>
+          <div class="flex justify-between text-xs text-slate-400 mb-1 font-mono">
+            <span>Ремень ГРМ</span>
+            <span>Ост: 45 000 км</span>
+          </div>
+          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div class="h-full bg-blue-500 rounded-full" style="width: 55%"></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-between text-xs text-slate-400 mb-1 font-mono">
+            <span>Передние колодки</span>
+            <span>Ост: 12 000 км</span>
+          </div>
+          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div class="h-full bg-emerald-500 rounded-full" style="width: 35%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- КНОПКА ДОБАВЛЕНИЯ (+) СПРАВА ВНИЗУ -->
+  <button id="addBtn" class="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 active:scale-90 rounded-full flex items-center justify-center text-white shadow-xl shadow-blue-600/40 text-2xl font-bold transition">
+    <i class="ph ph-plus"></i>
+  </button>
+
+  <!-- ШТОРКА ДОБАВЛЕНИЯ -->
+  <div id="modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-end">
+    <div class="bg-slate-900 border-t border-slate-800 w-full rounded-t-3xl p-5 space-y-4 max-w-md mx-auto">
+      <div class="flex justify-between items-center">
+        <span class="text-sm font-bold">Добавить запись</span>
+        <button id="closeBtn" class="text-slate-400 text-lg"><i class="ph ph-x"></i></button>
+      </div>
+
+      <button class="w-full py-3 border border-dashed border-blue-500/50 bg-blue-500/10 rounded-xl text-blue-400 text-xs font-semibold flex items-center justify-center gap-2">
+        <i class="ph ph-camera text-base"></i> Сфотографировать деталь / чек
+      </button>
+
+      <input type="text" placeholder="Что менялось (напр. Замена масла)" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 outline-none">
+      <input type="number" placeholder="Пробег (км)" value="218500" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-slate-200 outline-none">
+
+      <button class="w-full py-3 bg-blue-600 rounded-xl text-xs font-bold text-white">Сохранить</button>
+    </div>
+  </div>
+
+  <script>
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
+    const modal = document.getElementById('modal');
+    document.getElementById('addBtn').onclick = () => modal.classList.remove('hidden');
+    document.getElementById('closeBtn').onclick = () => modal.classList.add('hidden');
+  </script>
+</body>
+</html>
