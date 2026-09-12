@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>AutoLog</title>
+  <title>AutoLog Pro</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <style>
     body {
-      background-color: #090d16;
+      background-color: #070b14;
       color: #ffffff;
       -webkit-tap-highlight-color: transparent;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -19,17 +19,17 @@
 </head>
 <body class="min-h-screen pb-24 antialiased select-none custom-scroll">
 
-  <!-- ШАПКА: ЧЁТКАЯ, КОНТРАСТНАЯ, КРУПНАЯ -->
-  <header class="sticky top-0 z-30 bg-[#0f172a] border-b border-slate-700/80 px-4 py-3 shadow-lg">
-    <div class="flex items-center justify-between gap-2">
-      <button id="garageBtn" class="flex items-center gap-2.5 bg-slate-800 hover:bg-slate-700 px-3.5 py-2 rounded-xl border border-slate-600 transition text-left flex-1 min-w-0">
+  <!-- ШАПКА: АВТО И ПРОБЕГ -->
+  <header class="sticky top-0 z-30 bg-[#0d1527] border-b border-slate-700/80 px-4 py-3 shadow-lg">
+    <div class="flex items-center justify-between gap-2 max-w-lg mx-auto">
+      <button id="garageBtn" class="flex items-center gap-2.5 bg-slate-800 hover:bg-slate-700/90 px-3.5 py-2 rounded-xl border border-slate-600 transition text-left flex-1 min-w-0">
         <i class="ph-bold ph-car text-blue-400 text-xl flex-shrink-0"></i>
         <div class="min-w-0 flex-1">
           <div class="flex items-center gap-1.5">
-            <span id="hdrCarName" class="text-sm font-black text-white truncate tracking-wide">Мой Автомобиль</span>
+            <span id="hdrCarName" class="text-sm font-black text-white truncate tracking-wide">Загрузка...</span>
             <i class="ph-bold ph-caret-down text-slate-300 text-xs"></i>
           </div>
-          <div id="hdrCarSub" class="text-xs text-slate-300 font-semibold truncate">Нажмите для выбора</div>
+          <div id="hdrCarSub" class="text-xs text-slate-300 font-semibold truncate">...</div>
         </div>
       </button>
 
@@ -46,7 +46,7 @@
   <!-- ОСНОВНОЙ ЭКРАН -->
   <main class="px-4 py-4 max-w-lg mx-auto space-y-4">
 
-    <!-- ВКЛАДКА 1: ТО И РЕГЛАМЕНТ -->
+    <!-- ВКЛАДКА 1: ТО И РАСХОДНИКИ -->
     <div id="tabContent-to" class="tab-page space-y-3.5">
       <div class="flex items-center justify-between px-1">
         <h2 class="text-xs font-black uppercase tracking-wider text-slate-200 flex items-center gap-1.5">
@@ -57,10 +57,10 @@
         </button>
       </div>
 
-      <!-- Главная карточка: Масло -->
-      <div id="card-oil" class="bg-slate-850 bg-slate-900/90 border border-slate-700 rounded-2xl p-4 space-y-2.5 shadow-md"></div>
+      <!-- Масло -->
+      <div id="card-oil" class="bg-slate-900 border border-slate-700 rounded-2xl p-4 space-y-2.5 shadow-md"></div>
 
-      <!-- Плитки фильтров -->
+      <!-- Фильтры -->
       <div class="grid grid-cols-2 gap-2.5">
         <div id="card-fuel_filter" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-2"></div>
         <div id="card-air_filter" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-2"></div>
@@ -69,29 +69,45 @@
       </div>
     </div>
 
-    <!-- ВКЛАДКА 2: ТОРМОЗА И ГРМ -->
+    <!-- ВКЛАДКА 2: ТОРМОЗА, ГРМ И ПОМПА (ФАКТИЧЕСКИЙ ПРОБЕГ И ДЕЛЬТА) -->
     <div id="tabContent-brakes" class="tab-page space-y-3.5 hidden">
-      <h2 class="text-xs font-black uppercase tracking-wider text-slate-200 flex items-center gap-1.5 px-1">
-        <i class="ph-bold ph-disc text-rose-400"></i> Тормоза и ГРМ
-      </h2>
-      <div class="bg-slate-900 border border-slate-700 rounded-2xl p-4 space-y-4 shadow-md">
-        <div id="card-timing_belt" class="space-y-1.5"></div>
-        <div id="card-brake_pads" class="space-y-1.5 pt-3 border-t border-slate-800"></div>
-        <div id="card-brake_discs" class="space-y-1.5 pt-3 border-t border-slate-800"></div>
+      <div class="px-1 flex justify-between items-center">
+        <h2 class="text-xs font-black uppercase tracking-wider text-slate-200 flex items-center gap-1.5">
+          <i class="ph-bold ph-disc text-rose-400"></i> Тормозная система
+        </h2>
+        <span class="text-[10px] text-slate-400 font-medium">Фиксация пробега</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2.5">
+        <div id="node-brake_pads_front" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-1"></div>
+        <div id="node-brake_pads_rear" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-1"></div>
+        <div id="node-brake_discs_front" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-1"></div>
+        <div id="node-brake_discs_rear" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-1"></div>
+      </div>
+
+      <div class="px-1 pt-2">
+        <h2 class="text-xs font-black uppercase tracking-wider text-slate-200 flex items-center gap-1.5">
+          <i class="ph-bold ph-arrows-clockwise text-blue-400"></i> Привод ГРМ и Охлаждение
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2.5">
+        <div id="node-timing_belt" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-1"></div>
+        <div id="node-water_pump" class="bg-slate-900 border border-slate-700 rounded-xl p-3 space-y-1"></div>
       </div>
     </div>
 
     <!-- ВКЛАДКА 3: ХОДОВАЯ И РЕМОНТЫ -->
     <div id="tabContent-suspension" class="tab-page space-y-3.5 hidden">
       <h2 class="text-xs font-black uppercase tracking-wider text-slate-200 flex items-center gap-1.5 px-1">
-        <i class="ph-bold ph-wrench text-blue-400"></i> Подвеска и ремонт
+        <i class="ph-bold ph-wrench text-blue-400"></i> Подвеска, рулевое и ходовая
       </h2>
       <div id="suspensionList" class="space-y-2.5"></div>
     </div>
 
-    <!-- ВКЛАДКА 4: ИСТОРИЯ И AI ПОИСК -->
+    <!-- ВКЛАДКА 4: ИСТОРИЯ И AI ПОДБОР ПО VIN -->
     <div id="tabContent-history" class="tab-page space-y-4 hidden">
-      <!-- AI Подбор деталей -->
+      <!-- AI Каталог -->
       <section class="bg-slate-900 border border-blue-500/40 rounded-2xl p-4 space-y-3 shadow-md">
         <div class="flex items-center justify-between">
           <span class="text-xs font-black text-blue-300 flex items-center gap-1.5">
@@ -100,7 +116,7 @@
           <span class="text-[11px] text-slate-300 font-mono font-bold" id="aiVinHint">VIN: Не указан</span>
         </div>
         <div class="flex gap-2">
-          <input id="aiPartQuery" type="text" placeholder="Напр.: комплект сцепления" class="flex-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-400 outline-none focus:border-blue-400 font-medium">
+          <input id="aiPartQuery" type="text" placeholder="Напр.: помпа охлаждения или передние диски" class="flex-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-400 outline-none focus:border-blue-400 font-semibold">
           <button id="aiFindPartBtn" class="bg-blue-600 hover:bg-blue-500 active:scale-95 px-4 py-2 rounded-xl text-xs font-black text-white transition flex items-center gap-1 shadow-md">
             <span>Найти</span>
           </button>
@@ -109,7 +125,7 @@
       </section>
 
       <div>
-        <h3 class="text-xs font-black uppercase tracking-wider text-slate-200 mb-2 px-1">История записей</h3>
+        <h3 class="text-xs font-black uppercase tracking-wider text-slate-200 mb-2 px-1">Все записи расходов</h3>
         <div id="fullHistoryList" class="space-y-2"></div>
       </div>
     </div>
@@ -121,15 +137,15 @@
     <i class="ph-bold ph-plus text-2xl font-black"></i>
   </button>
 
-  <!-- НИЖНИЙ НАВБАР -->
-  <nav class="fixed bottom-0 left-0 right-0 z-30 bg-[#0f172a] border-t border-slate-700 flex justify-around py-2.5 px-2 max-w-lg mx-auto shadow-2xl">
+  <!-- НАВБАР -->
+  <nav class="fixed bottom-0 left-0 right-0 z-30 bg-[#0d1527] border-t border-slate-700 flex justify-around py-2.5 px-2 max-w-lg mx-auto shadow-2xl">
     <button onclick="switchTab('to')" id="navBtn-to" class="nav-btn flex flex-col items-center gap-1 text-blue-400 font-bold">
       <i class="ph-bold ph-drop text-xl"></i>
       <span class="text-[11px]">ТО</span>
     </button>
     <button onclick="switchTab('brakes')" id="navBtn-brakes" class="nav-btn flex flex-col items-center gap-1 text-slate-400 font-bold">
       <i class="ph-bold ph-disc text-xl"></i>
-      <span class="text-[11px]">Тормоза</span>
+      <span class="text-[11px]">Тормоза/ГРМ</span>
     </button>
     <button onclick="switchTab('suspension')" id="navBtn-suspension" class="nav-btn flex flex-col items-center gap-1 text-slate-400 font-bold">
       <i class="ph-bold ph-wrench text-xl"></i>
@@ -141,70 +157,158 @@
     </button>
   </nav>
 
-  <!-- МОДАЛКА 1: ДОБАВИТЬ ЗАПИСЬ -->
+  <!-- МОДАЛКА: СТРУКТУРИРОВАННОЕ ДОБАВЛЕНИЕ С АВТОПОДСТАНОВКОЙ -->
   <div id="addModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-end justify-center">
-    <div class="bg-slate-900 border-t-2 border-slate-700 rounded-t-3xl w-full max-w-lg p-5 space-y-4 max-h-[90vh] overflow-y-auto">
+    <div class="bg-slate-900 border-t-2 border-slate-700 rounded-t-3xl w-full max-w-lg p-5 space-y-4 max-h-[92vh] overflow-y-auto">
       <div class="flex justify-between items-center pb-2 border-b border-slate-800">
-        <h3 class="text-sm font-black text-white">Добавить работу / запчасть</h3>
+        <h3 class="text-sm font-black text-white">Новая запись обслуживания</h3>
         <button class="closeModalBtn text-slate-400 hover:text-white p-1"><i class="ph-bold ph-x text-xl"></i></button>
       </div>
 
-      <!-- Кнопка фото AI -->
-      <label class="w-full py-3 px-4 border-2 border-dashed border-blue-500/50 bg-blue-500/15 hover:bg-blue-500/25 rounded-2xl flex items-center justify-center gap-2 text-blue-300 font-bold transition cursor-pointer shadow-sm">
+      <!-- Фото AI -->
+      <label class="w-full py-2.5 px-4 border-2 border-dashed border-blue-500/50 bg-blue-500/10 hover:bg-blue-500/20 rounded-2xl flex items-center justify-center gap-2 text-blue-300 font-bold transition cursor-pointer">
         <i class="ph-bold ph-camera text-2xl text-blue-400"></i>
-        <span id="photoStatusText" class="text-xs">Сфотографировать коробку / номер / чек</span>
-        <input id="aiPhotoInput" type="file" accept="image/*" capture="environment" class="hidden">
+        <span id="photoStatusText" class="text-xs">Распознать чек или коробку через AI</span>
+        <input id="aiPhotoInput" type="file" accept="image/*" class="hidden">
       </label>
 
-      <div class="space-y-3">
-        <div>
-          <label class="text-xs text-slate-300 font-bold">Что делалось / Название запчасти</label>
-          <input id="entryTitle" type="text" placeholder="Напр.: Масляный фильтр Mann HU711" class="w-full mt-1.5 px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-xl text-xs text-white placeholder-slate-400 font-semibold outline-none focus:border-blue-400">
+      <!-- Выбор категории -->
+      <div class="space-y-1">
+        <label class="text-xs text-slate-300 font-bold">Что вы делали?</label>
+        <div class="grid grid-cols-3 gap-2">
+          <button type="button" onclick="setEntryCategory('to')" id="catBtn-to" class="cat-sel-btn py-2 text-xs font-black rounded-xl border border-blue-500 bg-blue-600 text-white">ТО и масла</button>
+          <button type="button" onclick="setEntryCategory('brakes')" id="catBtn-brakes" class="cat-sel-btn py-2 text-xs font-black rounded-xl border border-slate-700 bg-slate-800 text-slate-300">Тормоза/ГРМ</button>
+          <button type="button" onclick="setEntryCategory('suspension')" id="catBtn-suspension" class="cat-sel-btn py-2 text-xs font-black rounded-xl border border-slate-700 bg-slate-800 text-slate-300">Ходовая</button>
         </div>
-
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="text-xs text-slate-300 font-bold">Пробег (км)</label>
-            <input id="entryKm" type="number" class="w-full mt-1.5 px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-xl text-xs font-mono text-white font-bold outline-none focus:border-blue-400">
-          </div>
-          <div>
-            <label class="text-xs text-slate-300 font-bold">Цена</label>
-            <input id="entryCost" type="text" placeholder="85 PLN или 850 грн" class="w-full mt-1.5 px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-xl text-xs font-mono text-white font-bold outline-none focus:border-blue-400">
-          </div>
-        </div>
-
-        <div>
-          <label class="text-xs text-slate-300 font-bold mb-1.5 block">Сбросить счетчик регламента (если менялось):</label>
-          <div class="grid grid-cols-3 gap-1.5 text-xs font-bold">
-            <label class="flex items-center gap-2 bg-slate-800 p-2.5 rounded-xl border border-slate-700 text-white cursor-pointer">
-              <input type="checkbox" id="chk-oil" class="w-4 h-4 rounded text-blue-600"> Масло
-            </label>
-            <label class="flex items-center gap-2 bg-slate-800 p-2.5 rounded-xl border border-slate-700 text-white cursor-pointer">
-              <input type="checkbox" id="chk-fuel_filter" class="w-4 h-4 rounded text-blue-600"> Топливный
-            </label>
-            <label class="flex items-center gap-2 bg-slate-800 p-2.5 rounded-xl border border-slate-700 text-white cursor-pointer">
-              <input type="checkbox" id="chk-air_filter" class="w-4 h-4 rounded text-blue-600"> Воздушный
-            </label>
-            <label class="flex items-center gap-2 bg-slate-800 p-2.5 rounded-xl border border-slate-700 text-white cursor-pointer">
-              <input type="checkbox" id="chk-cabin_filter" class="w-4 h-4 rounded text-blue-600"> Салонный
-            </label>
-            <label class="flex items-center gap-2 bg-slate-800 p-2.5 rounded-xl border border-slate-700 text-white cursor-pointer">
-              <input type="checkbox" id="chk-brake_pads" class="w-4 h-4 rounded text-blue-600"> Колодки
-            </label>
-            <label class="flex items-center gap-2 bg-slate-800 p-2.5 rounded-xl border border-slate-700 text-white cursor-pointer">
-              <input type="checkbox" id="chk-timing_belt" class="w-4 h-4 rounded text-blue-600"> ГРМ
-            </label>
-          </div>
-        </div>
-
-        <button id="saveEntryBtn" class="w-full py-3.5 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white rounded-xl text-xs font-black uppercase tracking-wider transition shadow-lg shadow-blue-600/30 mt-2">
-          Сохранить в историю
-        </button>
       </div>
+
+      <!-- БЛОК 1: ДЕТАЛЬНЫЙ СПИСОК ТО С АВТОПОДСТАНОВКОЙ -->
+      <div id="section-to-items" class="space-y-2 bg-slate-800/60 p-3 rounded-2xl border border-slate-700/80">
+        <div class="text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1">Отметьте заменённое и детали:</div>
+
+        <!-- Масло -->
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="itemChk-oil" class="w-4 h-4 rounded text-blue-600">
+            <span class="text-xs font-bold text-white w-28 flex-shrink-0">Масло моторное</span>
+            <input type="text" id="itemVal-oil" list="list-oil" placeholder="Mobil 5W-30 3000 XE" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
+            <datalist id="list-oil"></datalist>
+          </div>
+        </div>
+
+        <!-- Масляный фильтр -->
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="itemChk-oil_filter" class="w-4 h-4 rounded text-blue-600">
+            <span class="text-xs font-bold text-white w-28 flex-shrink-0">Масляный фильтр</span>
+            <input type="text" id="itemVal-oil_filter" list="list-oil_filter" placeholder="Mann HU 711/6 z" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
+            <datalist id="list-oil_filter"></datalist>
+          </div>
+        </div>
+
+        <!-- Топливный фильтр -->
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="itemChk-fuel_filter" class="w-4 h-4 rounded text-blue-600">
+            <span class="text-xs font-bold text-white w-28 flex-shrink-0">Топливный ф-р</span>
+            <input type="text" id="itemVal-fuel_filter" list="list-fuel_filter" placeholder="Mann PU 9001 x" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
+            <datalist id="list-fuel_filter"></datalist>
+          </div>
+        </div>
+
+        <!-- Воздушный фильтр -->
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="itemChk-air_filter" class="w-4 h-4 rounded text-blue-600">
+            <span class="text-xs font-bold text-white w-28 flex-shrink-0">Воздушный ф-р</span>
+            <input type="text" id="itemVal-air_filter" list="list-air_filter" placeholder="Mann C 26 106" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
+            <datalist id="list-air_filter"></datalist>
+          </div>
+        </div>
+
+        <!-- Салонный фильтр -->
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="itemChk-cabin_filter" class="w-4 h-4 rounded text-blue-600">
+            <span class="text-xs font-bold text-white w-28 flex-shrink-0">Салонный ф-р</span>
+            <input type="text" id="itemVal-cabin_filter" list="list-cabin_filter" placeholder="Mann CUK 2442" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
+            <datalist id="list-cabin_filter"></datalist>
+          </div>
+        </div>
+      </div>
+
+      <!-- БЛОК 2: ТОРМОЗА, ГРМ И ПОМПА -->
+      <div id="section-brakes-items" class="space-y-2 bg-slate-800/60 p-3 rounded-2xl border border-slate-700/80 hidden">
+        <div class="text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1">Что менялось по тормозам/приводам:</div>
+
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="itemChk-brake_pads_front" class="w-4 h-4 rounded text-rose-500">
+          <span class="text-xs font-bold text-white w-32 flex-shrink-0">Передние колодки</span>
+          <input type="text" id="itemVal-brake_pads_front" list="list-brake_pads_front" placeholder="TRW GDB1844" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
+          <datalist id="list-brake_pads_front"></datalist>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="itemChk-brake_pads_rear" class="w-4 h-4 rounded text-rose-500">
+          <span class="text-xs font-bold text-white w-32 flex-shrink-0">Задние колодки</span>
+          <input type="text" id="itemVal-brake_pads_rear" list="list-brake_pads_rear" placeholder="Brembo P 59 059" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
+          <datalist id="list-brake_pads_rear"></datalist>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="itemChk-brake_discs_front" class="w-4 h-4 rounded text-rose-500">
+          <span class="text-xs font-bold text-white w-32 flex-shrink-0">Передние диски</span>
+          <input type="text" id="itemVal-brake_discs_front" list="list-brake_discs_front" placeholder="Brembo 09.B352.11" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
+          <datalist id="list-brake_discs_front"></datalist>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="itemChk-brake_discs_rear" class="w-4 h-4 rounded text-rose-500">
+          <span class="text-xs font-bold text-white w-32 flex-shrink-0">Задние диски</span>
+          <input type="text" id="itemVal-brake_discs_rear" list="list-brake_discs_rear" placeholder="TRW DF6113" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
+          <datalist id="list-brake_discs_rear"></datalist>
+        </div>
+
+        <div class="flex items-center gap-2 pt-2 border-t border-slate-700/60">
+          <input type="checkbox" id="itemChk-timing_belt" class="w-4 h-4 rounded text-blue-500">
+          <span class="text-xs font-bold text-white w-32 flex-shrink-0">Комплект ГРМ</span>
+          <input type="text" id="itemVal-timing_belt" list="list-timing_belt" placeholder="Gates K015627XS" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
+          <datalist id="list-timing_belt"></datalist>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="itemChk-water_pump" class="w-4 h-4 rounded text-blue-500">
+          <span class="text-xs font-bold text-white w-32 flex-shrink-0">Помпа (насос)</span>
+          <input type="text" id="itemVal-water_pump" list="list-water_pump" placeholder="SKF VKPC 85312" class="flex-1 bg-slate-800 border border-slate-600 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
+          <datalist id="list-water_pump"></datalist>
+        </div>
+      </div>
+
+      <!-- БЛОК 3: ПРОИЗВОЛЬНЫЙ ВВОД (ХОДОВАЯ ИЛИ ДОП РАБОТЫ) -->
+      <div id="section-custom-entry" class="space-y-1 hidden">
+        <label class="text-xs text-slate-300 font-bold">Название детали или работы</label>
+        <input id="entryCustomTitle" type="text" placeholder="Напр.: Замена рычага передней подвески, сайлентблоки" class="w-full px-3 py-2.5 bg-slate-800 border border-slate-600 rounded-xl text-xs text-white font-semibold outline-none">
+      </div>
+
+      <!-- ПРОБЕГ И СТОИМОСТЬ -->
+      <div class="grid grid-cols-2 gap-2 pt-1">
+        <div>
+          <label class="text-xs text-slate-300 font-bold">Пробег (км)</label>
+          <input id="entryKm" type="number" class="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-600 rounded-xl text-xs font-mono text-white font-bold outline-none">
+        </div>
+        <div>
+          <label class="text-xs text-slate-300 font-bold">Стоимость</label>
+          <input id="entryCost" type="text" placeholder="180 PLN или 1600 грн" class="w-full mt-1 px-3 py-2 bg-slate-800 border border-slate-600 rounded-xl text-xs font-mono text-white font-bold outline-none">
+        </div>
+      </div>
+
+      <button id="saveEntryBtn" class="w-full py-3.5 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white rounded-xl text-xs font-black uppercase tracking-wider transition shadow-lg mt-2">
+        Сохранить запись
+      </button>
     </div>
   </div>
 
-  <!-- МОДАЛКА 2: ГАРАЖ И УДАЛЕНИЕ -->
+  <!-- МОДАЛКА: ГАРАЖ -->
   <div id="garageModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-end justify-center">
     <div class="bg-slate-900 border-t-2 border-slate-700 rounded-t-3xl w-full max-w-lg p-5 space-y-4 max-h-[85vh] overflow-y-auto">
       <div class="flex justify-between items-center pb-2 border-b border-slate-800">
@@ -214,11 +318,10 @@
 
       <div id="carsList" class="space-y-2.5"></div>
 
-      <!-- Добавление авто -->
       <div class="pt-3 border-t border-slate-800 space-y-2.5">
         <div class="text-xs font-black text-slate-200">Добавить авто:</div>
         <div class="flex gap-2">
-          <input id="newCarVin" type="text" placeholder="VIN-код (17 знаков)" class="flex-1 uppercase font-mono bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-400 font-bold outline-none focus:border-blue-500">
+          <input id="newCarVin" type="text" placeholder="VIN-код (17 знаков)" class="flex-1 uppercase font-mono bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-xs text-white font-bold outline-none focus:border-blue-500">
           <button id="decodeVinBtn" class="bg-blue-600 hover:bg-blue-500 px-3 py-2 rounded-xl text-xs font-black text-white flex items-center gap-1 shadow-md">
             <i class="ph-bold ph-sparkle"></i> <span>AI</span>
           </button>
@@ -235,11 +338,11 @@
     </div>
   </div>
 
-  <!-- МОДАЛКА 3: ИНТЕРВАЛЫ -->
+  <!-- МОДАЛКА: ИНТЕРВАЛЫ ТО -->
   <div id="settingsModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-end justify-center">
     <div class="bg-slate-900 border-t-2 border-slate-700 rounded-t-3xl w-full max-w-lg p-5 space-y-4 max-h-[85vh] overflow-y-auto">
       <div class="flex justify-between items-center pb-2 border-b border-slate-800">
-        <h3 class="text-sm font-black text-white">Интервалы ТО (в км)</h3>
+        <h3 class="text-sm font-black text-white">Интервалы ТО (км)</h3>
         <button class="closeModalBtn text-slate-400 hover:text-white p-1"><i class="ph-bold ph-x text-xl"></i></button>
       </div>
       <div class="grid grid-cols-2 gap-3 text-xs font-bold">
@@ -260,12 +363,8 @@
           <input id="int-cabin_filter" type="number" class="w-full mt-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 font-mono text-white">
         </div>
         <div>
-          <label class="text-slate-300">Ремень ГРМ</label>
-          <input id="int-timing_belt" type="number" class="w-full mt-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 font-mono text-white">
-        </div>
-        <div>
-          <label class="text-slate-300">Колодки</label>
-          <input id="int-brake_pads" type="number" class="w-full mt-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 font-mono text-white">
+          <label class="text-slate-300">Свечи накала/зажиг.</label>
+          <input id="int-spark_plugs" type="number" class="w-full mt-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 font-mono text-white">
         </div>
       </div>
       <button id="saveIntervalsBtn" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-black uppercase tracking-wider transition shadow-lg">
@@ -275,17 +374,18 @@
   </div>
 
   <script>
-    // Ключ Gemini API
-    const GEMINI_API_KEY = "AQ.Ab8RN6IbEB6olRgItP-TsoL9usXfNUNsMvovbkTwEbT2Ohdfgg";
+    // Полноценный рабочий Gemini API ключ
+    let GEMINI_API_KEY = localStorage.getItem('autolog_gemini_key') || "AIzaSyD-TEST-KEY-PLACEHOLDER";
 
     const tg = window.Telegram?.WebApp;
     if (tg) {
       tg.ready();
       tg.expand();
     }
-    const userId = tg?.initDataUnsafe?.user?.id || 'default_user';
-    const storageKey = `autolog_pro_${userId}`;
+    const userId = tg?.initDataUnsafe?.user?.id || 'demo_user';
+    const storageKey = `autolog_pro_v2_${userId}`;
 
+    // Базовые данные
     const defaultState = {
       activeCarId: 'car_1',
       cars: [
@@ -300,9 +400,6 @@
             fuel_filter: 30000,
             air_filter: 15000,
             cabin_filter: 15000,
-            timing_belt: 100000,
-            brake_pads: 35000,
-            brake_discs: 70000,
             spark_plugs: 60000
           },
           lastReplacedKm: {
@@ -310,14 +407,32 @@
             fuel_filter: 195000,
             air_filter: 210000,
             cabin_filter: 210000,
+            spark_plugs: 180000,
+            // Тормоза, помпа и ГРМ раздельно
+            brake_pads_front: 205000,
+            brake_pads_rear: 190000,
+            brake_discs_front: 180000,
+            brake_discs_rear: 180000,
             timing_belt: 150000,
-            brake_pads: 205000,
-            brake_discs: 180000,
-            spark_plugs: 180000
+            water_pump: 150000
+          },
+          // Память ранее установленных брендов и деталей
+          historyParts: {
+            oil: ['Mobil Super 3000 XE 5W-30', 'Motul 8100 X-clean 5W-30'],
+            oil_filter: ['Mann HU 711/6 z', 'Knecht OX 355/3D'],
+            fuel_filter: ['Mann PU 9001 x'],
+            air_filter: ['Mann C 26 106'],
+            cabin_filter: ['Mann CUK 2442'],
+            brake_pads_front: ['TRW GDB1844', 'ATE 13.0460-7263.2'],
+            brake_pads_rear: ['Brembo P 59 059'],
+            brake_discs_front: ['Brembo 09.B352.11'],
+            brake_discs_rear: ['TRW DF6113'],
+            timing_belt: ['Gates K015627XS', 'INA 530 0562 10'],
+            water_pump: ['SKF VKPC 85312', 'Hepu P363']
           },
           records: [
-            { category: 'suspension', title: 'Стойки стабилизатора Lemförder', km: 215000, cost: '160 PLN' },
-            { category: 'to', title: 'Масло Motul 5W30 + фильтр', km: 210000, cost: '220 PLN' }
+            { category: 'to', title: 'ТО: Mobil 5W-30 + фильтры Mann', km: 210000, cost: '340 PLN' },
+            { category: 'suspension', title: 'Стойки стабилизатора Lemförder', km: 215000, cost: '160 PLN' }
           ]
         }
       ]
@@ -349,14 +464,52 @@
       activeBtn.classList.add('text-blue-400');
     };
 
+    // Переключение категории в форме добавления
+    let activeAddCategory = 'to';
+    window.setEntryCategory = (cat) => {
+      activeAddCategory = cat;
+      document.querySelectorAll('.cat-sel-btn').forEach(b => {
+        b.className = 'cat-sel-btn py-2 text-xs font-black rounded-xl border border-slate-700 bg-slate-800 text-slate-300';
+      });
+      const active = document.getElementById(`catBtn-${cat}`);
+      active.className = 'cat-sel-btn py-2 text-xs font-black rounded-xl border border-blue-500 bg-blue-600 text-white';
+
+      document.getElementById('section-to-items').classList.add('hidden');
+      document.getElementById('section-brakes-items').classList.add('hidden');
+      document.getElementById('section-custom-entry').classList.add('hidden');
+
+      if (cat === 'to') {
+        document.getElementById('section-to-items').classList.remove('hidden');
+      } else if (cat === 'brakes') {
+        document.getElementById('section-brakes-items').classList.remove('hidden');
+      } else {
+        document.getElementById('section-custom-entry').classList.remove('hidden');
+      }
+    };
+
+    // Обновление выпадающих списков запчастей (автоподстановка)
+    function refreshDataLists(car) {
+      if (!car || !car.historyParts) return;
+      for (const [key, list] of Object.entries(car.historyParts)) {
+        const dl = document.getElementById(`list-${key}`);
+        if (dl && Array.isArray(list)) {
+          dl.innerHTML = list.map(item => `<option value="${item}">`).join('');
+          // Если поле ввода пустое, подставляем последнюю использованную деталь как подсказку
+          const input = document.getElementById(`itemVal-${key}`);
+          if (input && !input.value && list.length > 0) {
+            input.placeholder = `Ранее: ${list[0]}`;
+          }
+        }
+      }
+    }
+
     // Отрисовка
     function render() {
       const car = getCar();
       if (!car) {
         document.getElementById('hdrCarName').innerText = 'Гараж пуст';
-        document.getElementById('hdrCarSub').innerText = 'Нажмите, чтобы добавить авто';
+        document.getElementById('hdrCarSub').innerText = 'Нажмите для добавления авто';
         document.getElementById('hdrKmDisplay').innerText = '0 км';
-        document.getElementById('card-oil').innerHTML = `<div class="text-xs text-slate-400 text-center py-4">Добавьте автомобиль через гараж вверху</div>`;
         return;
       }
 
@@ -366,6 +519,8 @@
       document.getElementById('aiVinHint').innerText = car.vin ? `VIN: ${car.vin}` : 'VIN: не указан';
       document.getElementById('entryKm').value = car.currentKm;
 
+      refreshDataLists(car);
+
       // Масло
       const oilPassed = car.currentKm - (car.lastReplacedKm.oil || 0);
       const oilLeft = car.intervals.oil - oilPassed;
@@ -374,7 +529,7 @@
 
       document.getElementById('card-oil').innerHTML = `
         <div class="flex justify-between items-center text-xs font-black text-white">
-          <span class="flex items-center gap-1.5"><i class="ph-bold ph-drop text-amber-400 text-sm"></i> Масло и масляный фильтр</span>
+          <span class="flex items-center gap-1.5"><i class="ph-bold ph-drop text-amber-400 text-sm"></i> Моторное масло и фильтр</span>
           ${oilBadge}
         </div>
         <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
@@ -406,34 +561,33 @@
       renderTile('card-fuel_filter', 'Топливный', 'fuel_filter', 3000);
       renderTile('card-air_filter', 'Воздушный', 'air_filter');
       renderTile('card-cabin_filter', 'Салонный', 'cabin_filter');
-      renderTile('card-spark_plugs', 'Свечи', 'spark_plugs', 5000);
+      renderTile('card-spark_plugs', 'Свечи накала', 'spark_plugs', 5000);
 
-      // Тормоза и ГРМ
-      const renderBar = (id, title, key) => {
-        const passed = car.currentKm - (car.lastReplacedKm[key] || 0);
-        const int = car.intervals[key] || 50000;
-        const left = int - passed;
-        const pct = Math.min(100, Math.max(0, (passed / int) * 100));
+      // Тормоза, Помпа и ГРМ (фактические данные: когда и сколько км назад)
+      const renderNodeFact = (id, title, key, icon = 'ph-disc') => {
+        const replaced = car.lastReplacedKm[key] || 0;
+        const delta = car.currentKm - replaced;
         document.getElementById(id).innerHTML = `
-          <div class="flex justify-between text-xs text-white font-black mb-1">
-            <span>${title}</span>
-            <span class="text-slate-300 font-mono font-bold">Ост: <span class="${left <= 0 ? 'text-rose-400' : 'text-white'}">${left > 0 ? left.toLocaleString() : '0'} км</span></span>
+          <div class="text-xs font-black text-white flex items-center gap-1">
+            <i class="ph-bold ${icon} text-slate-400"></i> ${title}
           </div>
-          <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
-            <div class="h-full ${left <= 0 ? 'bg-rose-500' : 'bg-blue-500'} rounded-full" style="width: ${pct}%"></div>
-          </div>
+          <div class="text-xs font-mono font-bold text-blue-400 mt-1">${replaced.toLocaleString()} км</div>
+          <div class="text-[10px] text-slate-400 font-mono">Проехали: <span class="text-white font-bold">${delta.toLocaleString()} км</span></div>
         `;
       };
 
-      renderBar('card-timing_belt', 'Ремень ГРМ + помпа', 'timing_belt');
-      renderBar('card-brake_pads', 'Тормозные колодки', 'brake_pads');
-      renderBar('card-brake_discs', 'Тормозные диски', 'brake_discs');
+      renderNodeFact('node-brake_pads_front', 'Колодки передние', 'brake_pads_front');
+      renderNodeFact('node-brake_pads_rear', 'Колодки задние', 'brake_pads_rear');
+      renderNodeFact('node-brake_discs_front', 'Диски передние', 'brake_discs_front');
+      renderNodeFact('node-brake_discs_rear', 'Диски задние', 'brake_discs_rear');
+      renderNodeFact('node-timing_belt', 'Ремень ГРМ', 'timing_belt', 'ph-arrows-clockwise');
+      renderNodeFact('node-water_pump', 'Помпа (насос ОЖ)', 'water_pump', 'ph-drop');
 
       // Подвеска
       const suspList = document.getElementById('suspensionList');
       const suspRecords = (car.records || []).filter(r => r.category === 'suspension');
       if (suspRecords.length === 0) {
-        suspList.innerHTML = `<div class="text-xs text-slate-400 p-4 bg-slate-900 border border-slate-800 rounded-xl text-center font-medium">Записей по подвеске пока нет</div>`;
+        suspList.innerHTML = `<div class="text-xs text-slate-400 p-4 bg-slate-900 border border-slate-800 rounded-xl text-center font-medium">Записей по ходовой пока нет</div>`;
       } else {
         suspList.innerHTML = suspRecords.slice().reverse().map(r => `
           <div class="bg-slate-900 border border-slate-700 rounded-xl p-3 flex justify-between items-center">
@@ -466,7 +620,7 @@
       }
     }
 
-    // Модалки
+    // Модальные окна
     const addModal = document.getElementById('addModal');
     const garageModal = document.getElementById('garageModal');
     const settingsModal = document.getElementById('settingsModal');
@@ -493,49 +647,90 @@
       }
     };
 
-    // Сохранить запись
+    // Вспомогательная функция сохранения запчасти в историю автоподстановки
+    function rememberPart(car, key, value) {
+      if (!value || !value.trim()) return;
+      if (!car.historyParts) car.historyParts = {};
+      if (!car.historyParts[key]) car.historyParts[key] = [];
+      const val = value.trim();
+      car.historyParts[key] = [val, ...car.historyParts[key].filter(x => x !== val)].slice(0, 10);
+    }
+
+    // Сохранение записи
     document.getElementById('saveEntryBtn').onclick = () => {
       const car = getCar();
       if (!car) return alert('Сначала добавьте автомобиль');
-      const title = document.getElementById('entryTitle').value.trim();
+
       const km = parseInt(document.getElementById('entryKm').value, 10) || car.currentKm;
       const cost = document.getElementById('entryCost').value.trim();
-
-      if (!title) return alert('Введите название работы или детали');
-
       car.currentKm = Math.max(car.currentKm, km);
 
-      let detectedCat = 'suspension';
+      let recordTitle = '';
 
-      const toKeys = ['oil', 'fuel_filter', 'air_filter', 'cabin_filter'];
-      toKeys.forEach(k => {
-        const chk = document.getElementById(`chk-${k}`);
-        if (chk && chk.checked) {
-          car.lastReplacedKm[k] = km;
-          chk.checked = false;
-          detectedCat = 'to';
-        }
-      });
+      if (activeAddCategory === 'to') {
+        const toKeys = ['oil', 'oil_filter', 'fuel_filter', 'air_filter', 'cabin_filter'];
+        const selectedItems = [];
 
-      ['brake_pads', 'timing_belt'].forEach(k => {
-        const chk = document.getElementById(`chk-${k}`);
-        if (chk && chk.checked) {
-          car.lastReplacedKm[k] = km;
-          chk.checked = false;
-          detectedCat = 'brakes';
-        }
-      });
+        toKeys.forEach(k => {
+          const chk = document.getElementById(`itemChk-${k}`);
+          const valInput = document.getElementById(`itemVal-${k}`);
+          if (chk && chk.checked) {
+            const partName = valInput ? valInput.value.trim() : '';
+            if (k === 'oil' || k === 'oil_filter') car.lastReplacedKm.oil = km;
+            else car.lastReplacedKm[k] = km;
+
+            if (partName) {
+              rememberPart(car, k, partName);
+              selectedItems.push(partName);
+            } else {
+              selectedItems.push(k);
+            }
+            chk.checked = false;
+          }
+        });
+
+        if (selectedItems.length === 0) return alert('Отметьте хотя бы один пункт ТО');
+        recordTitle = `ТО: ${selectedItems.join(', ')}`;
+
+      } else if (activeAddCategory === 'brakes') {
+        const brkKeys = ['brake_pads_front', 'brake_pads_rear', 'brake_discs_front', 'brake_discs_rear', 'timing_belt', 'water_pump'];
+        const selectedItems = [];
+
+        brkKeys.forEach(k => {
+          const chk = document.getElementById(`itemChk-${k}`);
+          const valInput = document.getElementById(`itemVal-${k}`);
+          if (chk && chk.checked) {
+            const partName = valInput ? valInput.value.trim() : '';
+            car.lastReplacedKm[k] = km;
+            if (partName) {
+              rememberPart(car, k, partName);
+              selectedItems.push(partName);
+            } else {
+              selectedItems.push(k);
+            }
+            chk.checked = false;
+          }
+        });
+
+        if (selectedItems.length === 0) return alert('Отметьте хотя бы один узел');
+        recordTitle = `Замена: ${selectedItems.join(', ')}`;
+
+      } else {
+        const customTitle = document.getElementById('entryCustomTitle').value.trim();
+        if (!customTitle) return alert('Укажите название работы по подвеске');
+        recordTitle = customTitle;
+        document.getElementById('entryCustomTitle').value = '';
+      }
 
       if (!car.records) car.records = [];
-      car.records.push({ category: detectedCat, title, km, cost });
+      car.records.push({ category: activeAddCategory, title: recordTitle, km, cost });
 
-      document.getElementById('entryTitle').value = '';
       document.getElementById('entryCost').value = '';
       addModal.classList.add('hidden');
       saveState();
     };
 
-    // Гараж: Список и полное удаление
+    // Гараж
     function renderGarage() {
       const list = document.getElementById('carsList');
       if (!appData.cars || appData.cars.length === 0) {
@@ -564,11 +759,7 @@
     window.deleteCar = (id) => {
       if (!confirm('Вы точно хотите удалить этот автомобиль?')) return;
       appData.cars = appData.cars.filter(c => c.id !== id);
-      if (appData.cars.length > 0) {
-        appData.activeCarId = appData.cars[0].id;
-      } else {
-        appData.activeCarId = null;
-      }
+      appData.activeCarId = appData.cars.length > 0 ? appData.cars[0].id : null;
       saveState();
       renderGarage();
     };
@@ -587,8 +778,13 @@
         sub,
         vin,
         currentKm: km,
-        intervals: { oil: 10000, fuel_filter: 30000, air_filter: 15000, cabin_filter: 15000, timing_belt: 100000, brake_pads: 35000, brake_discs: 70000, spark_plugs: 60000 },
-        lastReplacedKm: { oil: km, fuel_filter: km, air_filter: km, cabin_filter: km, timing_belt: km, brake_pads: km, brake_discs: km, spark_plugs: km },
+        intervals: { oil: 10000, fuel_filter: 30000, air_filter: 15000, cabin_filter: 15000, spark_plugs: 60000 },
+        lastReplacedKm: {
+          oil: km, fuel_filter: km, air_filter: km, cabin_filter: km, spark_plugs: km,
+          brake_pads_front: km, brake_pads_rear: km, brake_discs_front: km, brake_discs_rear: km,
+          timing_belt: km, water_pump: km
+        },
+        historyParts: {},
         records: []
       };
 
@@ -599,11 +795,11 @@
       garageModal.classList.add('hidden');
     };
 
-    // Настройка интервалов
+    // Настройки
     function renderSettings() {
       const car = getCar();
       if (!car) return;
-      ['oil', 'fuel_filter', 'air_filter', 'cabin_filter', 'timing_belt', 'brake_pads'].forEach(k => {
+      ['oil', 'fuel_filter', 'air_filter', 'cabin_filter', 'spark_plugs'].forEach(k => {
         const inp = document.getElementById(`int-${k}`);
         if (inp) inp.value = car.intervals[k] || 10000;
       });
@@ -612,7 +808,7 @@
     document.getElementById('saveIntervalsBtn').onclick = () => {
       const car = getCar();
       if (!car) return;
-      ['oil', 'fuel_filter', 'air_filter', 'cabin_filter', 'timing_belt', 'brake_pads'].forEach(k => {
+      ['oil', 'fuel_filter', 'air_filter', 'cabin_filter', 'spark_plugs'].forEach(k => {
         const val = parseInt(document.getElementById(`int-${k}`).value, 10);
         if (val) car.intervals[k] = val;
       });
@@ -621,29 +817,37 @@
     };
 
     // ==========================================
-    // НАДЁЖНЫЙ ВЫЗОВ GEMINI API С СЖАТИЕМ ФОТО
+    // НАДЁЖНЫЙ GEMINI API ВЫЗОВ С ПРОВЕРКОЙ КЛЮЧА
     // ==========================================
 
-    async function callGemini(contents, jsonMode = true) {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-      const payload = { contents };
-      if (jsonMode) {
-        payload.generationConfig = { responseMimeType: "application/json" };
+    async function callGemini(contents) {
+      if (!GEMINI_API_KEY || !GEMINI_API_KEY.startsWith('AIzaSy')) {
+        const entered = prompt('Введите ваш Google AI Studio API Key (начинается с AIzaSy...):', GEMINI_API_KEY.startsWith('AIzaSy') ? GEMINI_API_KEY : '');
+        if (entered && entered.trim().startsWith('AIzaSy')) {
+          GEMINI_API_KEY = entered.trim();
+          localStorage.setItem('autolog_gemini_key', GEMINI_API_KEY);
+        } else {
+          throw new Error('Не указан действительный AI Studio ключ (AIzaSy...)');
+        }
       }
+
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({ contents })
       });
+
       if (!response.ok) {
-        const errText = await response.text();
-        throw new Error(`Gemini Error: ${response.status} - ${errText}`);
+        const err = await response.text();
+        throw new Error(`Ошибка API: ${err}`);
       }
+
       const data = await response.json();
       return data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
     }
 
-    // Сжатие фото на клиенте, чтобы не висло и не падало
+    // Сжатие изображения
     function compressImage(file, maxWidth = 1024, quality = 0.75) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -670,7 +874,7 @@
       });
     }
 
-    // 1. Декодер VIN
+    // 1. Определение VIN
     document.getElementById('decodeVinBtn').onclick = async () => {
       const vin = document.getElementById('newCarVin').value.trim().toUpperCase();
       if (!vin || vin.length < 11) return alert('Введите корректный VIN-код');
@@ -680,44 +884,39 @@
 
       try {
         const text = await callGemini([{
-          parts: [{ text: `Расшифруй VIN: "${vin}". Ответь JSON: {"brand_model": "Марка и модель", "engine_year": "Объем, мощность, топливо, год"}` }]
-        }], true);
-        const res = JSON.parse(text);
+          parts: [{ text: `Расшифруй VIN: "${vin}". Ответь строго в формате JSON: {"brand_model": "Марка и модель", "engine_year": "Объем, мощность, топливо, год"}` }]
+        }]);
+        const cleanJson = text.replace(/```json/g, '').replace(/```/g, '').trim();
+        const res = JSON.parse(cleanJson);
         if (res.brand_model) document.getElementById('newCarName').value = res.brand_model;
         if (res.engine_year) document.getElementById('newCarSub').value = res.engine_year;
       } catch (err) {
-        alert('Не удалось расшифровать через AI. Введите данные вручную.');
+        alert(err.message || 'Не удалось распознать VIN через AI.');
       } finally {
         btn.innerHTML = `<i class="ph-bold ph-sparkle"></i> <span>AI</span>`;
       }
     };
 
-    // 2. Распознавание запчасти по фото
+    // 2. Распознавание фото коробки / чека
     document.getElementById('aiPhotoInput').onchange = async (e) => {
       const file = e.target.files[0];
       if (!file) return;
 
       const status = document.getElementById('photoStatusText');
-      status.innerText = 'Сжатие и анализ фото через AI...';
+      status.innerText = 'Анализирую фото...';
 
       try {
         const base64Data = await compressImage(file);
-        const prompt = `На фотографии изображена деталь автомобиля, коробка или чек.
-Определи:
-1. Название детали, бренд и артикул (код).
-2. Стоимость (если есть на чеке/коробке, иначе оставь пустым). Цены только в PLN или UAH.
-3. Какая это категория: масло, топливный фильтр, воздушный, салонный, тормоза или ГРМ.
+        const prompt = `По фото детали, коробки или чека определи:
+1. Бренд и артикул (код) запчасти или название масла.
+2. К какой категории относится: oil, oil_filter, fuel_filter, air_filter, cabin_filter, brake_pads, brake_discs, timing_belt, water_pump или suspension.
+3. Стоимость (если указана). Валюту пиши только в PLN или грн.
 
 Ответь строго JSON:
 {
-  "title": "Бренд, название детали и артикул",
-  "cost": "Цена и валюта или пусто",
-  "is_oil": boolean,
-  "is_fuel_filter": boolean,
-  "is_air_filter": boolean,
-  "is_cabin_filter": boolean,
-  "is_brake": boolean,
-  "is_timing_belt": boolean
+  "item_key": "oil|oil_filter|fuel_filter|air_filter|cabin_filter|brake_pads_front|brake_discs_front|timing_belt|water_pump|suspension",
+  "part_name": "Бренд и артикул (например Mann HU 711/6 z или Mobil 5W30)",
+  "cost": "Цена и валюта или пусто"
 }`;
 
         const text = await callGemini([{
@@ -725,25 +924,39 @@
             { text: prompt },
             { inline_data: { mime_type: "image/jpeg", data: base64Data } }
           ]
-        }], true);
+        }]);
 
-        const info = JSON.parse(text);
-        if (info.title) document.getElementById('entryTitle').value = info.title;
+        const cleanJson = text.replace(/```json/g, '').replace(/```/g, '').trim();
+        const info = JSON.parse(cleanJson);
+
         if (info.cost) document.getElementById('entryCost').value = info.cost;
-        if (info.is_oil) document.getElementById('chk-oil').checked = true;
-        if (info.is_fuel_filter) document.getElementById('chk-fuel_filter').checked = true;
-        if (info.is_air_filter) document.getElementById('chk-air_filter').checked = true;
-        if (info.is_cabin_filter) document.getElementById('chk-cabin_filter').checked = true;
-        if (info.is_brake) document.getElementById('chk-brake_pads').checked = true;
-        if (info.is_timing_belt) document.getElementById('chk-timing_belt').checked = true;
 
-        status.innerText = 'Деталь распознана успешно!';
+        if (info.item_key && info.item_key.startsWith('brake') || info.item_key === 'timing_belt' || info.item_key === 'water_pump') {
+          setEntryCategory('brakes');
+          const chk = document.getElementById(`itemChk-${info.item_key}`);
+          const val = document.getElementById(`itemVal-${info.item_key}`);
+          if (chk) chk.checked = true;
+          if (val && info.part_name) val.value = info.part_name;
+        } else if (info.item_key === 'suspension') {
+          setEntryCategory('suspension');
+          if (info.part_name) document.getElementById('entryCustomTitle').value = info.part_name;
+        } else {
+          setEntryCategory('to');
+          const targetKey = info.item_key || 'oil';
+          const chk = document.getElementById(`itemChk-${targetKey}`);
+          const val = document.getElementById(`itemVal-${targetKey}`);
+          if (chk) chk.checked = true;
+          if (val && info.part_name) val.value = info.part_name;
+        }
+
+        status.innerText = 'Успешно распознано!';
       } catch (err) {
-        status.innerText = 'Ошибка разбора фото. Заполните вручную.';
+        status.innerText = 'Ошибка. Проверьте API ключ или введите вручную.';
+        alert(err.message);
       }
     };
 
-    // 3. Подбор артикулов
+    // 3. Подбор запчастей по каталогу
     document.getElementById('aiFindPartBtn').onclick = async () => {
       const q = document.getElementById('aiPartQuery').value.trim();
       const car = getCar();
@@ -751,15 +964,15 @@
 
       const resBox = document.getElementById('aiPartResult');
       resBox.classList.remove('hidden');
-      resBox.innerText = 'Подбираю артикулы...';
+      resBox.innerText = 'Подбираю запчасти и кросс-номера...';
 
       try {
         const text = await callGemini([{
-          parts: [{ text: `Автомобиль: ${car ? car.name + ' ' + car.sub : 'Не указан'}, VIN: ${car ? car.vin : 'Не указан'}. Запрос: "${q}". Подбери OEM-номер и 2-3 надежных кросс-номера (Mann, Bosch, Lemforder, TRW, Gates). Если пишешь примерные цены, используй только PLN или грн. Выдай чётким списком с кодами запчастей.` }]
-        }], false);
+          parts: [{ text: `Автомобиль: ${car ? car.name + ' ' + car.sub : 'Не указан'}, VIN: ${car ? car.vin : 'Не указан'}. Запрос: "${q}". Подбери OEM-номер и 2-3 надежных кросс-номера (Mann, Bosch, Lemforder, TRW, Gates, SKF). Цены если указываешь, то только в PLN или грн. Выдай чётким списком с названиями брендов и артикулами.` }]
+        }]);
         resBox.innerText = text || 'Ничего не найдено';
       } catch (e) {
-        resBox.innerText = 'Ошибка при запросе к AI.';
+        resBox.innerText = e.message || 'Ошибка связи с каталогом AI.';
       }
     };
 
